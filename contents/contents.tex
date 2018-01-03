@@ -1,0 +1,509 @@
+\documentclass{amsart}
+
+\newcommand{\RR}{\mathbb{R}}
+\DeclareMathOperator{\rref}{rref}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\rank}{rank}
+
+
+
+\begin{document}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+\begin{enumerate}
+  \item Subspaces of $\RR^n$
+  \begin{enumerate}
+\item definition of a subspace of $\RR^n$
+\item nullspace, eigenspace, orthogonal complement
+\item linear combinations and spans
+\item column space of a matrix, row space of a matrix
+\item the pivot columns of a matrix span its column space
+\item sums of subspaces, spanning sets of sums
+  \end{enumerate}
+  \item Linear independence
+  \begin{enumerate}
+   \item Linear dependence and independence
+   \item $n+1$ vectors in $\RR^n$ are linearly dependent.
+   \item The pivot columns of a matrix are linearly independent.
+   \item orthogonal sets --- definition and linear independence
+   \item linearly independent subspaces, direct sums of subspaces
+   \item Two subspaces with zero intersection are linearly independent. In particular, $W$ and $W^\perp$ are linearly independent.
+   \item Eigenspaces for distinct eigenvectors are linearly independent.
+  \end{enumerate}
+  \item Basis and dimension
+  \begin{enumerate}
+   \item definition of a basis of a subspace
+   \item Every subspace of $\RR^n$ has a basis (containing a given linearly independent subset, contained in a given spanning set).
+   \item Any two bases of a subspace of $\RR^n$ have the same size.
+   \item coordinates vectors, change of basis matrices
+   \item definition of dimension
+   \item orthonormal sets, orthonormal bases
+   \item bases of $W$ and $W^\perp$, taken together, form a basis of $\RR^n$.
+   \item rank of a matrix, row rank equals column rank, rank-nullity theorem
+   \item the four subspaces, $N(A^T)=C(A)^\perp$, $N(A)=C(A^T)^\perp$
+ \end{enumerate}
+ \item Linear transformations
+ \begin{enumerate}
+  \item definition, kernel, image
+  \item the matrix of an endomorphism with respect to a basis, identifications of kernel and image with nullspace and column space, respectively
+  \item defining a linear transformation by giving its values on a basis
+  \item the matrix of a transformation subordinate to a direct sum decomposition
+  \item similarity and diagonalizability
+  \item projections and their diagonalizability
+  \item the least-squares solutions
+ \end{enumerate}
+ \item Spectral theory
+ \begin{enumerate}
+  \item the spectral theorem, assuming $n$ real eigenvalues, counted with multiplicity
+  \item the matrix of a transformation with respect to bases of its domain and codomain
+  \item the singular value decomposition (SVD), connection with the four subspaces
+  \item applications of the SVD: pseudoinverse, low-rank approximations, principal component analysis, etc.
+ \end{enumerate}
+ \item Abstract vector spaces
+ \begin{enumerate}
+  \item axioms, examples (subspaces of $\RR^n$, polynomials, matrices, functions from a set to a vector space)
+  \item subspaces, function spaces, spaces of solutions to linear ODEs
+  \item finite-dimensional vector spaces, bases
+  \item linear transformations, isomorphism, a vector-space of dimension $n$ is isomorphic to $\RR^n$.
+  \item inner product spaces
+  \item orthogonal projection onto finite-dimensional subspaces
+  \item Fourier series
+ \end{enumerate}
+\end{enumerate}
+
+\section{Subspaces of $\RR^n$}
+\begin{itemize}
+  \setlength{\itemsep}{0.5em}
+  \item Definition: A \emph{subspace of $\RR^n$} is a subset $U$ of $\RR^n$ that is \emph{closed under addition}, i.e.,
+  \begin{center}
+    if $u_1\in U$ and $u_2\in U$ then $u_1+u_2\in U$,
+  \end{center}
+  and \emph{closed under scalar multiplication}, i.e.,
+  \begin{center}
+  if $t\in \RR$ and $u\in U$ then $tu\in U$.
+  \end{center}
+
+  \item Example: Let $$U=\{u\in \RR^3 : u_1-2u_2=3u_3\}$$.
+  Then $U$ is a subspace of $\RR^3$.
+
+  \item Definition: The nullspace $N(A)$ of a matrix $A\in\RR^{m\times n}$ is the set of all vectors $x\in\RR^n$ such that $Ax=0$:
+  $$N(A) = \{x\in\RR^n : Ax=0\}.$$ 
+
+  \item Theorem: $N(A)$ is a subspace of $\RR^n$
+
+\item $\{u\in \RR^3 : u_1-2u_2=3u_3\} = N\left(\begin{bmatrix}1&-2&-3\end{bmatrix}\right)$
+
+  \item Prove that $\{x\in\RR^n : Ax=b\}$ is a subspace of $\RR^n$ if and only if $b=0$.
+
+  \item Definition: Let $\lambda\in \RR$. The {$\lambda$-eigenspace $E_\lambda(A)$} of a matrix $A\in\RR^{n\times n}$ is the set of all $\lambda$-eigenvectors of $A$:
+  $$E_\lambda(A) = \{x\in\RR^n: Ax = \lambda x\}.$$
+
+\item Corollary: $E_\lambda(A)$ is a subspace of $\RR^n$.
+
+\item Proof: $E_\lambda(A) = N(\lambda I - A)$.
+
+\item Definition: Let $S$ be a subset of $\RR^n$.
+The \emph{orthogonal complement of $S$} written $S^\perp$, is the set of vectors orthogonal to all elements of $S$:
+$$S^\perp = \left\{v\in\RR^n : \text{$u\cdot v = 0$ for all $u\in S$}
+\right\}$$
+
+\item Theorem: Suppose $S=\{v_1,\ldots,v_m\}$.
+Then $S^\perp$ is a subspace of $\RR^n$.
+
+\item Proof: $\displaystyle{S^\perp} = N\left(\begin{bmatrix}v_1^t\\\vdots\\v_m^t\end{bmatrix}\right)$.
+
+\item Definition: Let $S$ be a subset of $\RR^n$.
+A \emph{linear combination of elements of $S$} is a finite sum of the of the form
+$$t_1u_1+\cdots +t_ku_k,$$
+where $t_j\in \RR$ and $u_j\in S$.
+
+\item Theorem: A subset $U$ of $\RR^n$ is a subspace of $\RR^n$ if and only if $U$ is \emph{closed under linear combinations}, i.e., if and only if every linear combination of elements of $U$ is, itself, an element of $U$.
+
+\item Definition: Let $S$ be a subset of $\RR^n$. The \emph{span of $S$}, written $\langle S\rangle$, is the set of all linear combinations of elements of $S$.
+
+\item Theorem: $\langle S\rangle$ is a subset of $\RR^n$.
+
+\item Proof: It suffices to show that $\langle S\rangle$ is closed under linear combinations, i.e.:
+\begin{center}
+a linear combination of linear combinations of elements of $S$\\ is a linear combination of elements of $S$.
+\end{center}
+
+\item Exercise: Prove that $u\in \langle v_1,\ldots,v_k\rangle$ if and only if
+$$\langle u, v_1,\ldots,v_k\rangle = \langle v_1,\ldots,v_k\rangle.$$
+\item Theorem: $\langle S\rangle$ is the smallest subspace of $\RR^n$ containing $S$, i.e., 
+\begin{center}
+  if $U$ is a subset of $\RR^n$ and $S\subseteq U$ then $\langle S\rangle\subseteq U$.
+\end{center}
+
+\item Corollary: A subset $U$ of $\RR^n$ is a subspace of $\RR^n$ if and only if $U=\langle U\rangle$.
+
+\item Exercise: Suppose $\langle S_1\rangle = \langle S_2\rangle$. Must $S_1$ equal $S_2$?
+
+\item Definition: Let $S$ be a subset of $\RR^n$ and let $U$ be a subspace of $\RR^n$.
+We say that \emph{$S$ spans $U$} or that \emph{$S$ is a spanning set of $U$} if $U=\langle S\rangle$.
+
+\item Find vectors $v_1,\ldots,v_k$ such that $\{v_1,\ldots,v_k\}$ spans $N(A)$, where $A=...$.
+
+\item Find a finite spanning set for $E_\lambda(A)$, where $A=...$ and $\lambda=...$.
+
+\item Find a vector $v_1$ such $\{v_1\}$ spans $\left\{\begin{bmatrix}2\\-3\end{bmatrix}\right\}^\perp$.
+
+\item Find a vector $v_1$ such $\{v_1\}$ spans
+$\left\{\begin{bmatrix}2\\-3\\1\end{bmatrix},
+  \begin{bmatrix}-1\\1\\1\end{bmatrix}\right\}^\perp$
+
+\item Can you find two vectors $v_1$ and $v_2$ such $\{v_1, v_2\}$ spans
+$\left\{\begin{bmatrix}2\\-3\\1\end{bmatrix}
+  \right\}^\perp$. Two \emph{unit vectors}? Two \emph{orthogonal} vectors? Two orthogonal unit vectors? A single vector?
+
+
+\item Let $A\in\RR^{m\times n}$. The \emph{column space of $A$}, written $C(A)$, is the set of vectors of the form $Ax$, where $x\in\RR^n$:
+$$
+C(A) = \left\{Ax : x\in\RR^{m\times n}\right\} \subseteq \RR^m
+$$
+
+\item Theorem: $C(A)$ is the span of the set of column vectors of $A$.
+
+\item Corollary: $C(A)$ is a subspace of $\RR^m$.
+
+\item Definition: Let $A\in\RR^{m\times n}$ and let $U$ be a subspace of $\RR^n$.
+The \emph{image of $U$ under $A$}, written $AU$, is the set of all matrix-vector products $Au$ for $u\in U$:
+$$
+AU = \{Au : u\in U\}\subseteq \RR^m.
+$$
+\item Note that $C(A)=A\RR^n$.
+
+\item Theorem: $AU$ is a subspace of $\RR^m$.
+
+\item Corollary: $C(A)$ is a subspace of $\RR^m$.
+
+\item Definition: The $j$-th column of $A$ is a \emph{pivot column} if the reduced row echelon form of $A$ has a leading 1 in column $j$.
+
+\item Theorem: The pivot columns of $A$ span $C(A)$.
+
+\item Exercise: Suppose $AU_1 = AU_2$. Does it follow that $U_1=U_2$?
+
+\item Definition: Let $A\in\RR^{m\times n}$ and let $V$ be a subspace of $\RR^m$.
+The \emph{inverse image of $U$ under $A$}, written $A^{-1}V$, is the set of all vectors $x\in\RR^n$ whose matrix-vector product with $A$ belongs to $V$.
+$$
+A^{-1}V = \{x\in\RR^n: Ax\in V\}\subseteq \RR^n.
+$$
+\item The inverse image $A^{-1}V$ is defined even if $A^{-1}$ does not exist. However:
+
+\item Theorem: If $A$ is invertible, then
+$$A^{-1}V = \{A^{-1}v : v\in V\}.$$
+
+\item Note that $N(A) = A^{-1}\{0\}$
+
+\item Theorem: $A^{-1}V$ is a subspace of $\RR^n$.
+
+\item Corollary: $N(A)$ is a subspace of $\RR^n$.
+
+\item Suppose $A^{-1}V_1 = A^{-1}V_2$. Does it follow that $V_1=V_2$?
+
+\item Prove that $U\subseteq A^{-1}(AU)$ and that $A(A^{-1}V)\subseteq V$.
+Give counterexamples to show that equality does not hold, in general.
+
+\item Exercise: Suppose that $\{u_1,\ldots,u_k\}$ spans $U$. Prove that $\{Au_1,\ldots,Au_k\}$ spans $AU$.
+
+\item Exercise: Suppose that $\{v_1,\ldots,v_k\}$ spans $V$ and that $u_1,\ldots,u_k\in\RR^n$ are vectors such that $Au_1=v_1$, \ldots, $Au_k=v_k$.
+Must $\{u_1,\ldots,u_k\}$ span $A^{-1}V$?
+
+\item Definition: Let $U$ and $V$ be subspaces of $\RR^n$.
+The \emph{sum of $U$ and $V$}, written $U + V$ is the set of sums $u+v$ for $u\in U$ and $v\in V$:
+$$
+U + V = \{u + v : u\in U,\,v\in V\}\subseteq\RR^n.
+$$
+
+\item Theorem: $U+ V$ is a subspace of $\RR^n$.
+
+\item $\langle S\rangle + \langle T\rangle = \langle S\cup T\rangle$.
+
+\item Definition: Let $U_1,\ldots,U_k$ be subspaces of $\RR^n$. The \emph{sum of $U_1, \ldots, U_k$} is the set of sums $u_1+\cdots+u_k$, where $u_j\in U_j$:
+$$
+\sum_{j=1}^k U_j = U_1+\cdots + U_k = \{u_1+\cdots + u_k : u_1\in U_1,\ldots, u_k\in U_k\}.
+$$ 
+
+\item Theorem: $U_1+\cdots + U_k$ is a subspace of $\RR^n$.
+
+\item Exercise:$\langle S_1\rangle + \cdots + \langle S_k\rangle = \langle S_1\cup\cdots\cup S_k\rangle$ 
+
+\item Exercise: $\langle u_1,\ldots,u_k\rangle = \langle u_1\rangle + \cdots + \langle u_k\rangle$
+
+\item Exercise: Prove that $(U_1+U_2)^\perp = U_1^\perp\cap U_2^\perp$. Generalize to $k$ subspaces.
+
+
+\item Prove that $A(U_1+U_2)=AU_1 + AU_2$ and that $A^{-1}(V_1+V_2)=A^{-1}V_1 + A^{-1}V_2$.
+Generalize to $k$ summands.
+\end{itemize}
+
+\section{Linear dependence and independence}
+\begin{itemize}
+  \setlength{\itemsep}{0.5em}
+  \item Definition: Let $v_1,\ldots,v_k\in\RR^n$.
+  A \emph{linear dependence relation among $v_1,\ldots,v_k$} is an identity of the form
+  $$
+  t_1v_1+\cdots t_kv_k=0,
+  $$
+  where $t_1,\ldots,t_k\in\RR$. Such a relation is \emph{trivial} if $t_1=0,\ldots, t_k=0$.
+
+  \item A set $S$ of vectors in $\RR^n$ is \emph{linearly independent} if the only linear dependence relation among elements of $S$ is the trivial one.
+  Otherwise, it's \emph{linearly dependent}.
+
+  \item Theorem: $S$ is linearly independent if and only if every element of $\langle S\rangle$ can be written uniquely as a linear combination of elements of $S$.
+
+  \item A set $S$ of \underline{nonzero} vectors in $\RR^n$ is \emph{orthogonal} if every pair of distinct vectors pair $S$ are orthogonal, i.e.,
+  \begin{center}
+    $u\cdot v = 0$ for all $u, v\in S$ with $u\neq v$.
+  \end{center}
+
+  \item Theorem: An orthogonal set is linearly independent.
+
+  \item Theorem: Let $a_1,\ldots,a_n\in\RR^m$ be distinct vectors.
+  Then $\{a_1,\ldots,a_n\}$ is linearly independent if and only if the nullspace of the matrix
+  $$
+A := \begin{bmatrix}a_1&\cdots &a_n\end{bmatrix}
+  $$
+  is zero.
+
+  \item Corollary: Suppose $u_1,\ldots,u_{k+1}$ are distinct vectors in $\langle v_1,\ldots,v_k\rangle$.
+  Then $\{u_1,\ldots,u_k\}$ is linearly dependent.
+
+  \item Corollary: A set of $n+1$ vectors in $\RR^n$ is linearly dependent.
+
+
+  \item Theorem: Let $A\in\RR^{n\times n}$ be an invertible matrix.
+  Then vectors $v_1,\ldots,v_k\in\RR^n$ are linearly independent if and only if the vectors $Av_1,\ldots,Av_k$ are.
+
+  \item Corollary: The pivot columns of a matrix are linearly independent.
+
+  \item Let $A\in\RR^{m\times n}$ and let $v_1\ldots,v_k\in \RR^n$.
+  If $Av_1,\ldots,Av_k$ are linearly dependent (resp., independent), does it follow that $v_1,\ldots,v_k$ are?
+
+  \item Linearly independent sets are ``minimal'' spanning sets:
+
+  \item Theorem: Let $U$ be a subspace of $\RR^n$. A spanning set $S$ of $U$ is linearly independent if and only if no \underline{proper} subset of $S$ spans $U$.
+
+  \item Definition: Subspaces $U_1$ and $U_2$ of $\RR^n$ are \emph{linearly independent} if the pair $(u_1, u_2)$ is linearly independent for all $u_1\in U_1$ and all $u_2\in U_2$. 
+
+  \item Theorem: $U_1$ and $U_2$ are linearly independent if and only if $U_1\cap U_2 = \{0\}$.
+
+  \item Corollary: Let $\lambda_1$ and $\lambda_2$ be distinct eigenvalues of $A$. Then the eigenspaces $E_{\lambda_1}(A)$ and $E_{\lambda_2}(A)$ are linearly independent.
+
+  \item Definition: Subspaces $U_1$ and $U_2$ of $\RR^n$ are orthogonal if every element of $U_1$ is orthogonal to every element of $U_2$, i.e.,
+  \begin{center}
+    if $u_1\cdot u_2=0$ for all $u_1\in U_1$ and all $u_2\in U_2$.
+  \end{center}
+  \item Exercise: Let $U_1$ and $U_2$ be linearly independent subsets of $\RR^n$ and let $S_1$ and $S_2$ be subsets of $U_1$ and $U_2$, respectively. Then $S_1\cup S_2$ is linearly independent if and only if both $S_1$ and $S_2$ are linearly independent.
+
+  \item Definition: Subspaces $U_1,\ldots,U_k$ of $\RR^n$ are \emph{linearly independent} if the sequence $(u_1,\ldots, u_k)$ is linearly independent for all $u_1\in U_1,\ldots,u_k\in U_k$. 
+
+  \item Definition:  Subspaces $U_1,\ldots,U_k$ of $\RR^n$ are \emph{orthogonal} if they are pairwise orthogonal. 
+
+\item Exercise: Suppose $U_1,\ldots,U_j$ are orthogonal. Prove that $U_i$ and $\sum_{j\neq i}U_j$ are orthogonal for all $i$.
+
+  \item Theorem: The following are equivalent for subspaces $U_1,\ldots,U_k$ of $\RR^n$:
+  \begin{enumerate}
+    \item $U_1,\ldots,U_k$ are linearly independent.
+    \item $U_i$ and $\sum_{j\neq i} U_i$ are linearly independent for all $i$, i.e.,
+  $$
+  U_i\cap \sum_{j\neq i} U_i = \{0\},
+  $$
+  for all $i$.
+  \item Every element of $U_1+\cdots U_k$ can be written uniquely in the form $u_1+\cdots u_k$, where $u_1\in U_1,\ldots,u_k\in U_k$.
+  \end{enumerate}
+
+  \item Theorem: Let $A\in\RR^{n\times n}$ and let $\lambda_1,\ldots,\lambda_k$ be the distinct eigenvalues of $A$.
+  Then the eigenspaces $E_{\lambda_1}(A),\ldots,E_{\lambda_k}(A)$ are linearly independent.
+\end{itemize}
+
+\section{Basis and dimension}
+
+\begin{itemize}
+  \setlength{\itemsep}{0.5em}
+  \item Definition: Let $U$ be a nonzero subspace of $\RR^n$.
+  A set $B$ of vectors in $U$ is a \emph{basis of $U$} if $B$ is linearly independent and $B$ spans $U$.
+
+  \item Theorem/Example: The set of pivot columns of $A$ is a basis of $C(A)$.
+
+  \item Theorem: Let $U$ be a nonzero subspace of $\RR^n$. Then $U$ has a basis $B$ with at most $n$ elements.
+
+  \item Proof: Let $\mathcal{L}$ be the set of linearly independent subsets of $U$ and let $\mathcal{N}$ be the set of sizes of elements of $\mathcal{L}$, i.e.,
+  $$
+  \mathcal{N} = \{|S| : S\in \mathcal{L}\}.
+  $$
+  Note that $\mathcal{N}$ is nonempty:
+  Since $U$ is nonzero, it contains a nonzero vector $v$.
+  Since a set consisting of a single nonzero vector is linearly independent, $\{v\}\in\mathcal{L}$.
+  Thus, $1=|\{v\}|\in\mathcal{N}$.
+  Since each $S\in\mathcal{L}$ is a linearly independent subset of $\RR^n$, $|S|\leq n$ for all $S\in \mathcal{L}$.
+  It follows that $\mathcal{N}$ is a nonempty subset of $\{1,\ldots,n\}$.
+
+  Let $d$ be the largest element of $\mathcal{N}$ and let $B\in \mathcal{L}$ be a linearly independent set with $|B|=d$.
+  I claim, now, that $B$ spans $U$.
+  For suppose not.
+  Then there is a nonzero vector $u\in U$ that does not belong to $\langle B\rangle$.
+  But $0\neq u\notin \langle B\rangle$ with $B$ linearly independent implies $\{u\}\cup B$ is linearly independent.
+  Thus, $\{u\}\cup B\in\mathcal{L}$. But, as $u\notin B$, $|\{u\}\cup B| = |B| + 1 > d$, contradicting the maximality of $d$.
+  Therefore, $B$ must span $U$. By its construction, $B$ is linearly independent. Therefore, $B$ is a basis of $U$.
+
+  Strengthen to get a basis containing a given linearly independent set.
+
+  \item Every linearly independent subset of $U$ is contained in a basis of $U$.
+
+  \item Theorem: Let $B$ be a minimal spanning set of $U$, i.e., a spanning subset none of whose proper subsets span $U$.
+  Then $B$ is a basis of $U$.
+
+  \item Theorem: Let $B_1$ and $B_2$ be bases of a subspace $U$ of $\RR^n$.
+  Then $|B_1|=|B_2|$.
+
+  \item By ??, $|B_1|\leq |B_2|$ as $B_1$ is linearly independent and $B_2$ spans $\RR^n$.
+  Symmetrically, $|B_2|\leq |B_1|$ as $B_2$ is linearly independent and $B_1$ spans $U$.
+    Therefore, $|B_1|=|B_2|$.
+
+  \item Definition: Let $U$ be a subspace of $\RR^n$.
+  The \emph{dimension of $U$}, written $\dim U$, is the size of any basis of $U$.
+
+  \item Examples: $\dim\RR^n = n$. If $v\in\RR^n$ is a nonzero vector, then $\dim \langle v\rangle=1$. If $S$ is a linearly independent subset of $\RR^n$, then $\dim \langle S\rangle = |S|$.
+
+  \item Theorem: If $U_1$ and $U_2$ are subspaces of $\RR^n$ with $U_1\subseteq U_2$, then $\dim U_1\leq \dim U_2$, with equality if and only if $U_1=U_2$.
+
+  \item Corollary: If $S$ is a linearly independent subset of $U$ with $|S|=\dim U$, then $S$ is a basis of $U$.
+
+  \item Corollary: Any linearly independent subset of $\RR^n$ with $n$ elements is a basis of $\RR^n$.
+
+  \item Theorem: Let $S$ be a subset of $U$.
+  Then $S$ is a basis of $U$ if and only if any element of $u$ can be written uniquely as a linear combination of elements of $S$.
+
+  \item Definition: Let $U$ be a $d$-dimensional subspace of $\RR^n$ with \underline{ordered} basis $B=(b_1,\ldots,b_n)$ and let $u\in U$.
+  The \emph{coordinate vector of $u$ with respect to $B$}, written $[u]_B$, is the vector
+\[
+[u]_B=\begin{bmatrix}t_1\\\vdots\\ t_d\end{bmatrix}
+  \]
+  characterized by the identity
+  \[
+    u = t_1b_1+\cdots + t_db_d,
+  \]
+or, equivalently, by the identity
+\[\begin{bmatrix}b_1&\cdots&b_d\end{bmatrix}[u]_B=u.
+  \]
+
+  \item Convention: If $B = (b_1,\ldots,b_d)$ is a sequence of vectors, we use the same symbol, $B$, for the matrix whose $j$-th column if $v_j$, $j=1,\ldots,d$:
+  \[
+  B=\begin{bmatrix}b_1&\cdots b_d\end{bmatrix}
+  \]
+  
+  \item With this convention, $[u]_B$ is characterized by the identity
+  \[B[u]_B=u.\]
+
+  \item Theorem: Let $B$ be a basis of $\RR^n$. Then
+  \[[u]_B = B^{-1}u.\]
+
+  \item Definition: A set (resp., sequence) $S$ of vectors in $\RR^n$ is \emph{orthonormal} if its elements (resp., terms) are pairwise orthogonal unit vectors,
+  i.e., $B=\{b_1,\ldots,b_d\}$ (resp., $B=(b_1,\ldots,b_d)$) is orthonormal if 
+  \[
+    b_i\cdot b_j=\begin{cases}
+      1&\text{if $i=j$,}\\
+      0&\text{if $i\neq j$.}
+    \end{cases}
+    \]
+
+  \item Orthonormal sets/sequences are orthogonal and, thus, linearly independent.
+
+  \item A sequence $B=(b_1,\ldots,B_d)$ is orthonormal if and only if 
+  \[B^tB=I_d.\]
+  If $d=n$, this means that $B$ is invertible and $B^{-1}=B^t$. In this case, the identity
+  \[
+  BB^t=I_n
+  \]
+  holds, as well.
+
+  \item Definition: $B$ is an orthonormal \emph{basis of $U$} if it is both an orthonormal set and a basis of $B$.
+   
+  \item Theorem: Let $B=(b_1,\ldots,b_d)$ be an orthonormal basis of $U$. Then
+  \[
+  [u]_B = \begin{bmatrix}b_1\cdot u\\\vdots\\b_d\cdot u\end{bmatrix} = B^tu.
+  \]
+
+
+  \item Theorem: Every orthonormal set in $\RR^n$ is contained in an orthonormal basis of $\RR^n$.
+
+  \item Theorem: Suppose $B=(b_1,\ldots,b_n)$ is an orthonormal basis of $\RR^n$. Then 
+  \[
+  \langle b_1,\ldots,b_k\rangle^\perp = \langle b_{k+1},\ldots,b_n\rangle.  
+  \]
+
+  \item Corollary: Let $U$ be a subspace of $\RR^n$. Then 
+  \[
+   \dim U^\perp =  n - \dim U.
+  \]
+
+  \item Theorem: Let $B$ and $C$ be bases of $U$. Then there is a unique matrix $[B]_C\in\RR^{d\times d}$ such that
+  \[[B]_C[u]_B = [u]_C\] for all $\in U$.
+
+  \item Definition: The matrix $[C]_B$ is called the \emph{change of basis matrix on $U$ from $B$ to $C$}.
+
+  \item Theorem: \hfill
+  \begin{enumerate}
+    \item $[B]_B=I_d$
+    \item $[D]_C[C]_B=[D]_B$.
+    \item $[C]_B = [B]_C^{-1}$
+  \end{enumerate}
+
+  \item Definition: Let $A\in\RR^{m\times n}$. The \emph{rank of $A$}, written $r(A)$, is the dimension of its column space:
+  \[
+  r(A) = \dim C(A).  
+  \]
+  The \emph{nullity of $A$}, written $n(A)$, is the dimension of its nullspace:
+  \[
+  n(A) = \dim N(A).
+  \]
+
+  \item Let $\gamma\in\RR^{m\times m}$ be invertible and let $A\in\RR^{m\times n}$.
+  Then:
+  \begin{enumerate}
+    \item $R(\gamma A)=R(A)$,
+    \item $C(\gamma A)=\gamma C(A).$
+  \end{enumerate}
+
+  \item Theorem: Let $\gamma\in\RR^{n\times n}$ be invertible and let $v_1,\ldots,v_k\in \RR^n$.
+  Then
+  $$
+  \dim \langle \gamma v_1,\ldots,\gamma v_k\rangle = \dim \langle v_1,\ldots,v_k\rangle.
+  $$
+  In particular, if $V$ is a subspace of $\RR^n$, then
+  \[\dim \gamma V = \dim V.\]
+
+  \item Corollary: $r(\gamma A) = r(A)$.
+
+  \item Theorem: (row rank $=$ column rank) $\dim R(A) = \dim C(A)$.
+
+  \item Proof: Let $\gamma\in\RR^{m\times m}$ be an invertible matrix such that $\gamma A$ is in row echelon form.
+    The nonzero rows of $\gamma A$ are linearly independent (why?) and, thus, form a basis for $R(\gamma A)$.
+    Therefore, $\dim R(\gamma A)$ is the number of nonzero rows in $\gamma A$.
+    But the number of nonzero rows in $\gamma A$ equals the number of pivot columns of $B$ (why?) which, in turn, equals the rank of $\gamma A$.
+    Thus,
+    \[
+      \dim R(\gamma A) = r(\gamma A).
+    \]
+    But $\dim R(A)=\dim R(\gamma A)$, by ??, and $r(\gamma A) = r(A)$, by ??. Therefore,
+    \[\dim R(A)=r(A).\]
+
+
+  \item $N(A) = C(A^T)^\perp$. $\dim N(A) = \dim C(A^T)^\perp = n-r(A^T) = n-r(A)$
+\end{itemize}
+
+\section{Subspaces of $\RR^n$}
+Let $\gamma\in\RR^{m\times m}$ be an invertible matrix such that $\gamma A$ is in row echelon form.
+The nonzero rows of $\gamma A$ are linearly independent (why?) and, thus, form a basis for $R(\gamma A)$.
+Therefore, $\dim R(\gamma A)$ is the number of nonzero rows in $\gamma A$.
+But the number of nonzero rows in $\gamma A$ equals the number of pivot columns of $B$ (why?) which, in turn, equals the rank of $\gamma A$.
+
+Let $\gamma\in\RR^{m\times m}$ be an invertible matrix such that $\gamma A$ is in row echelon form.
+The nonzero rows of $\gamma A$ are linearly independent (why?) and, thus, form a basis for $R(\gamma A)$.
+Therefore, $\dim R(\gamma A)$ is the number of nonzero rows in $\gamma A$.
+But the number of nonzero rows in $\gamma A$ equals the number of pivot columns of $B$ (why?) which, in turn, equals the rank of $\gamma A$.
+
+
+\end{document}
+

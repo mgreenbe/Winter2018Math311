@@ -1,0 +1,831 @@
+\documentclass[fullpage]{amsart}
+
+\usepackage{amsmath, amsthm}
+
+\newcommand{\RR}{\mathbb{R}}
+\DeclareMathOperator{\rref}{rref}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\rank}{rank}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+
+\begin{document}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+
+\section{Subspaces of $\RR^n$}
+
+\begin{definition}
+A \emph{subspace of $\RR^n$} is a subset $U$ of $\RR^n$ that is \emph{closed under addition}:
+\begin{center}
+if $u_1\in U$ and $u_2\in U$ then $u_1+u_2\in U$,
+\end{center}
+and \emph{closed under scalar multiplication}:
+\begin{center}
+if $t\in \RR$ and $u\in U$ then $tu\in U$.
+\end{center}
+\end{definition}
+
+\begin{example}\label{example:first_subspace} The set
+$$U:=\left\{\begin{bmatrix}u_1\\u_2\\u_3\end{bmatrix}\in \RR^3 : u_1-2u_2=3u_3\right\}\subseteq \RR^3$$ is a subspace of $\RR^3$.
+\end{example}
+
+\begin{example}
+  Lines, planes (graphically).
+\end{example}
+
+\subsection{Nullspace}
+\begin{definition}
+  Let $A\in\RR^{m\times n}$. The \emph{nullspace of $A$}, written $N(A)$, is the set of all vectors $x\in\RR^n$ killed by $A$:
+  $$N(A) = \{x\in\RR^n : Ax=0\}.$$ 
+\end{definition}
+
+\begin{example} Let $U$ be as in Example~\ref{example:first_subspace}. Observe:
+\begin{align*}
+&&u_1-2u_2&=3u_3 \\
+&\text{if and only if}& u_1-2u_2-3u_3&=0\\
+&\text{if and only if}&\begin{bmatrix}1&-2&-3\end{bmatrix}
+\begin{bmatrix}u_1\\u_2\\u_3\end{bmatrix}&=[0].
+ \end{align*}
+Therefore, $$U=N\left(\begin{bmatrix}1&-2&-3\end{bmatrix}\right)$$
+\end{example}
+
+\begin{theorem}
+  $N(A)$ is a subspace of $\RR^n$.
+\end{theorem}
+
+\begin{proof}
+  Closure under addition: Let $u_1, u_2\in N(A)$. Then $Au_1=0$ and $Au_2=0$, by definition of $N(A)$. We compute:
+  \[
+    A(u_1+u_2)=Au_1 + Au_2 = 0 + 0 = 0.
+  \]
+  Therefore, by the defintion of $N(A)$, $u_1+u_2\in N(A)$.
+
+  Closure under scalar multiplication: Let $t\in \RR$ and let $u\in N(A)$.
+  Then $Au=0$, by definition of $N(A)$. We compute:
+  \[
+    A(tu)=tAu  = t0 = 0.
+  \]
+  Therefore, by the defintion of $N(A)$, $tu\in N(A)$.
+\end{proof}
+
+\begin{exercise}
+Prove that $\{x\in\RR^n : Ax=b\}$ is a subspace of $\RR^n$ if and only if $b=0$.
+\end{exercise}
+
+\begin{definition}
+  Let $\lambda\in \RR$ and let $A\in\RR^{m\times n}$.
+  The \emph{$\lambda$-eigenspace of $A$}, written  $E_\lambda(A)$, is the set of all $\lambda$-eigenvectors of $A$:
+  $$E_\lambda(A) = \{x\in\RR^n: Ax = \lambda x\}.$$
+\end{definition}
+
+Corollary: $E_\lambda(A)$ is a subspace of $\RR^n$.
+
+\begin{proof}
+  $E_\lambda(A) = N(\lambda I - A)$, and nullspaces are subspaces.
+\end{proof}
+
+\subsection{Orthogonal complement}
+\begin{definition}
+  Let $S$ be a subset of $\RR^n$.
+The \emph{orthogonal complement of $S$} written $S^\perp$, is the set of vectors orthogonal to all elements of $S$:
+$$S^\perp = \left\{v\in\RR^n : \text{$u\cdot v = 0$ for all $u\in S$}
+\right\}$$
+\end{definition}
+
+\begin{theorem}
+  $S^\perp$ is a subspace of $\RR^n$.
+\end{theorem}
+
+\begin{proof}
+  Closure under addition: Let $u_1, u_2\in S^\perp$ and $v\in S$.
+  We must show that $(u_1+u_2)\cdot v=0$.
+  By definition of $S^\perp$, $u_1\cdot v=0$ and $u_2\cdot v = 0$.
+  Therefore,
+    \[
+    (u_1+u_2)\cdot v=u_1\cdot v + u_2\cdot v = 0 + 0 = 0,
+  \]
+  as was to be shown.
+
+  Closure under scalar multiplication: Let $t\in \RR$, let $u\in S^\perp$, and let $v\in S$.
+  We must show that $(tu)\cdot v=0$. By definition of $S^\perp$, $u\cdot v = 0$.
+  Therefore,
+  \[
+    (tu)\cdot v=t (u\cdot v)  = t(0) = 0,
+  \]
+  as was to be shown.
+
+\end{proof}
+
+The orthogonal complement of a finite set of vectors is a nullspce:
+\begin{theorem}
+Suppose $S=\{a_1,\ldots,a_k\}$ and let $$A=\begin{bmatrix}a_1&\cdots a_k\end{bmatrix}.$$
+Then 
+$$S^\perp = N(A^T).$$
+\end{theorem}
+
+\begin{proof} Observe:
+$$A^Tx=
+\begin{bmatrix}a_1^T\\\vdots\\a_k^T\end{bmatrix}x
+=\begin{bmatrix}a_1^Tx\\\vdots\\a_k^Tx\end{bmatrix}
+=\begin{bmatrix}a_1^T\cdot x\\\vdots\\a_k^T\cdot x\end{bmatrix}$$
+  Therefore, $A^Tx=0$ if and only if $a_j\cdot x=0$ for all $j$, i.e., if and only if $x\in S^\perp$.
+  Thus, $N(A^T) = S^\perp$.
+\end{proof}
+
+We will see, later, that the orthogonal complement of \emph{any} subset of $\RR^n$ is a nullspace.
+
+\begin{example}
+  Lines, planes
+\end{example}
+
+\subsection{Image and column space}
+
+\begin{definition}
+  Let $A\in\RR^{m\times n}$ and let $U$ be a subspace of $\RR^n$.
+The \emph{image of $U$ under $A$}, written $AU$, is the set of all matrix-vector products $Au$ for $u\in U$:
+$$
+AU = \{Au : u\in U\}\subseteq \RR^m.
+$$
+\end{definition}
+
+\begin{theorem}
+  $AU$ is a subspace of $\RR^m$.
+\end{theorem}
+
+The image of $U=\RR^n$ plays a special role and gets a special name.
+\begin{definition}
+  Let $A\in \RR^{m\times n}$. The image of $\RR^n$ under $A$ is called the \emph{column space of $A$} and written $C(A)$:
+  $$
+  C(A) = A\RR^n = \{Ax : x\in\RR^n\}\subseteq\RR^m.
+  $$
+\end{definition}
+
+\subsection{Linear combinations}
+
+\begin{definition}
+  Let $u_1,\ldots,u_k\in\RR^n$.
+A \emph{linear combination of $u_1,\ldots,u_k$} is a vector of the form
+$$t_1u_1+\cdots +t_ku_k,$$
+where $t_j\in \RR$.
+\end{definition}
+
+\begin{example}
+  The sum $u_1+u_2$ is a linear combination of $u_1$ and $u_2$.
+  The scalar multiple $tu$ is a linear combination of $u$.
+\end{example}
+
+\begin{example}\label{example:lin_combs_are_matvecs}
+Let $a_1,\ldots,a_n\in\RR^m$ and let $A=\begin{bmatrix}a_1&\cdots &a_n\end{bmatrix}$.
+  Then the linear combinations of $a_1,\ldots,a_n$ are precisely the vectors of the form $Ax$, for $x\in \RR^n$:
+  $$
+  x_1a_1+\cdots + x_na_n = Ax.
+  $$
+  Thus, the column space of $A$ is the set of linear combinations of the column vectors of $A$:
+  $$
+  C(A) = \{x_1a_1+\cdots+x_na_n : x_1, \ldots, x_n\in \RR\}.
+  $$
+\end{example}
+
+\begin{exercise}\label{exerise:spans_are_subspaces}
+Let $S$ be a subset of $\RR^n$. Prove the following statements.
+\begin{enumerate}
+  \item The sum of two linear combinations of elements of $S$ is a linear combination of elements of $S$.
+  \item A scalar multiple of a linear combination of elements of $S$ is a linear combination of elements of $S$.
+  \item A linear combination of linear combinations of elements of $S$ is a linear combination of elements of $S$.
+\end{enumerate}
+\end{exercise}
+
+\begin{theorem}\label{theorem:subspaces_closed_under_lin_comb}
+  Let $U$ be a subset of $\RR^n$.
+  Then $U$ is a subspace of $\RR^n$ if and only if $U$ is \emph{closed under linear combinations}, i.e., if and only if every linear combination of (finitely many) elements of $U$ is, itself, an element of $U$.
+\end{theorem}
+
+\begin{corollary}
+  Let $A\in\RR^{m\times n}$ be a matrix. Then $C(A)$ is a subspace of $\RR^m$.
+\end{corollary}
+
+\begin{example}
+  Solution of a homogeneous system are linear combinations of \emph{basic solutions}.
+  (We'll give a more satisfying definition of basic solution later.)
+\end{example}
+
+\subsection{Span}
+
+\begin{definition}
+  Let $S$ be a subset of $\RR^n$. The \emph{span of $S$}, written $\langle S\rangle$, is the set of all linear combinations of elements of $S$.
+\end{definition}
+
+\begin{theorem}\label{theorem:spans_are_subspaces}
+  $\langle S\rangle$ is a subspace of $\RR^n$.
+\end{theorem}
+
+\begin{proof}
+  Do Exercise~\ref{exerise:spans_are_subspaces}.
+\end{proof}
+
+% \begin{proof} 
+%   Closure under addition: Let $x, y\in \langle S\rangle$.
+%   We must show that $x+y\in\langle S\rangle$.
+%   By definition of $\langle S\rangle$, this means showing that $x+y$ is a linear combination of elements of $S$.
+%   By definition of $\langle S\rangle$, $x$ and $y$ are linear combinations of elements of $S$.
+%   Thus, there are elements $u_1,\ldots,u_k\in S$, scalars $s_1\ldots,s_k\in \RR$, elements $v_1,\ldots,v_\ell\in S$, and scalars $t_1,\ldots,t_\ell\in \RR$ such that
+%   $$x=s_1u_1+\cdots s_ku_k,\quad
+%   y=t_1v_1+\cdots+t_\ell v_\ell.$$
+%   Then
+%   $$x+y=s_1u_1+\cdots s_ku_k+t_1v_1+\cdots+t_\ell v_\ell.$$
+%   As the $u_1,\ldots,u_k,v_1,\ldots,v_\ell\in S$, the sum $x+y$ is a linear combination of elements of $S$, as was to be shown.
+
+%   Closure under scalar multiplication: Let $x\in \langle S\rangle$ and let $s\in\RR$.
+%   We must show that $sx\in \langle S \rangle$.
+%   By definition of $\langle S\rangle$, this means showing that $sx$ is a linear combination of elements of $S$.
+%   By definition of $\langle S\rangle$, there are vectors $u_1,\ldots,u_k\in S$ and scalars $s_1\ldots,s_k\in \RR$ such that
+%   $$x=s_1u_1+\cdots s_ku_k.$$
+%   Then $$sx=(ss_1)u_1+\cdots+(ss_k)u_k$$
+%   As the $u_1,\ldots,u_k\in S$, the scalar multiple $sx$ is a linear combination of elements of $S$, as was to be shown.
+% \end{proof}
+
+\begin{exercise}\label{exercise:span_is_smallest}
+  Prove that $\langle S\rangle$ is the smallest subspace of $\RR^n$ containing $S$, i.e., that
+  if $U$ is a subspace of $\RR^n$ and $S\subseteq U$ then $\langle S\rangle\subseteq U$.
+  (Use Theorem~\ref{theorem:subspaces_closed_under_lin_comb}.)
+\end{exercise}
+
+\begin{exercise}\label{exercise:spanners_in_span}
+Let $S$ be a subset of $\RR^n$. Prove that $S\subseteq\langle S\rangle$.
+\end{exercise}
+
+\begin{theorem}\label{theorem:subspace_means_own_span}
+  Let $U$ be a subset of $\RR^n$.
+  Then $U$ is a subspace of $\RR^n$ if and only if $U=\langle U\rangle$.
+\end{theorem}
+\begin{proof}
+  Suppose $U$ is a subspace of $\RR^n$.
+  By Exercise~\ref{exercise:spanners_in_span}, $U\subseteq\langle U\rangle$.
+  By hypothesis, $U$ is a subspace of $\RR^n$; $U$ obviously contains $U$.
+  Therefore, by Exercise~\ref{exercise:spanners_in_span}, $\langle U\rangle\subseteq U$.
+  Having proved both inclusions, we conclude that $U=\langle U\rangle$.
+
+  Conversely, suppose $U=\langle U\rangle$.
+  Then $U$ is a subspace of $\RR^n$ by Theorem~\ref{theorem:spans_are_subspaces}
+\end{proof}
+
+\begin{exercise}\label{exercise:span_monotonicity}
+  Let $S$ and $T$ be subsets of $\RR^n$. Prove that if $S\subseteq T$ then $\langle S\rangle\subseteq\langle T\rangle$. Is the converse true?
+\end{exercise}
+\begin{theorem}
+  Let $u,v_1,\ldots,v_k\in\RR^n$. Then $u\in \langle v_1,\ldots,v_k\rangle$ if and only if
+\begin{equation}\label{equation:span_monotonicity_1}
+  \langle v_1,\ldots,v_k\rangle = \langle u, v_1,\ldots,v_k\rangle.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+  Suppose $u\in \langle v_1,\ldots,v_k\rangle$.
+  We must prove identity~\eqref{equation:span_monotonicity_1}.
+  By Exercise~\ref{exercise:span_monotonicity}, 
+$$\langle v_1,\ldots,v_k\rangle \subseteq \langle u, v_1,\ldots,v_k\rangle.$$
+To prove the reverse inclusion, let $x\in \langle u, v_1,\ldots,v_k\rangle$.
+Then there are scalars $r,s_1,\ldots,s_k$ such that
+\begin{equation}\label{equation:span_monotonicity_2}
+x=ru+s_1v_1+\cdots s_kv_k.
+\end{equation}
+Since $u\in \langle v_1,\ldots,v_k\rangle$, by hypothesis, there are scalars $t_1,\ldots,t_k\in\RR$ such that
+\begin{equation}\label{equation:span_monotonicity_3}
+u=t_1v_1+\cdots t_kv_k.
+\end{equation}
+Substituting \eqref{equation:span_monotonicity_3} into~\eqref{equation:span_monotonicity_2}, we get
+\begin{align*}
+x &= r(t_1v_1+\cdots t_kv_k)+s_1v_1+\cdots s_kv_k\\
+&=(rt_1+s_1)v_1+\cdots (rt_k+s_k)v_k.
+\end{align*}
+showing that $x$ is a linear combination of $v_1,\ldots v_k$.
+Therefore, $x\in \langle v_1\ldots,v_k\rangle$.
+Since $x\in \langle u, v_1,\ldots,v_k\rangle$ was chosen arbitrarily,
+$$
+\langle u, v_1,\ldots,v_k\rangle
+\subseteq \langle v_1,\ldots,v_k\rangle,
+$$
+completing the proof of~\eqref{equation:span_monotonicity_1}.
+
+Conversely, suppose that~\eqref{equation:span_monotonicity_1} holds.
+We must show that $u\in\langle v_1,\ldots,v_k\rangle$. But this is clear:
+\begin{align*}
+  u&\in \langle u,v_1,\ldots,v_k\rangle & \text{by Exercise~\ref{exercise:spanners_in_span}}\\
+  &=\langle v_1,\ldots,v_k\rangle &\text{by~\eqref{equation:span_monotonicity_1}} &\qedhere
+\end{align*}
+\end{proof}
+
+
+\begin{definition}
+  Let $S$ be a subset of $\RR^n$ and let $U$ be a subspace of $\RR^n$.
+We say that \emph{$S$ spans $U$} or that \emph{$S$ is a spanning set of $U$} if $U=\langle S\rangle$.
+\end{definition}
+
+\begin{exercise}
+Find vectors $v_1,\ldots,v_k$ such that $\{v_1,\ldots,v_k\}$ spans $N(A)$, where $A=...$.
+\end{exercise}
+
+\begin{exercise}
+Find a finite spanning set for $E_\lambda(A)$, where $A=...$ and $\lambda=...$.
+\end{exercise}
+
+\begin{exercise}
+Find a vector $v_1$ such $\{v_1\}$ spans $\left\{\begin{bmatrix}2\\-3\end{bmatrix}\right\}^\perp$.
+\end{exercise}
+
+\begin{exercise}
+Find a vector $v_1$ such $\{v_1\}$ spans
+$\left\{\begin{bmatrix}2\\-3\\1\end{bmatrix},
+  \begin{bmatrix}-1\\1\\1\end{bmatrix}\right\}^\perp$.
+  \end{exercise}
+
+\begin{exercise}
+Can you find two vectors $v_1$ and $v_2$ such $\{v_1, v_2\}$ spans
+$\left\{\begin{bmatrix}2\\-3\\1\end{bmatrix}
+  \right\}^\perp$. Two \emph{unit vectors}? Two \emph{orthogonal} vectors? Two orthogonal unit vectors? A single vector?
+\end{exercise}
+
+\begin{exercise}
+  Suppose that $\{u_1,\ldots,u_k\}$ spans $U$. Prove that $\{Au_1,\ldots,Au_k\}$ spans $AU$.
+\end{exercise}
+
+\subsection{Column space, again}
+\begin{example}
+  By Example~\ref{example:lin_combs_are_matvecs}, the column space of a matrix is the span of its column vectors:
+  $$
+  C\left(\begin{bmatrix}a_1&\cdots&a_k\end{bmatrix}\right) = \langle a_1,\ldots,a_k \rangle.
+  $$
+\end{example}
+
+\begin{theorem}\label{theorem:pivot_cols_span_col_space}
+$C(A)$ is spanned by its pivot columns.
+\end{theorem}
+
+We prove this theorem with the help of two lemmas (``helper theorems'').
+
+\begin{lemma}
+Let $v_1\ldots,v_k\in\RR^n$ and let $X\in\RR^{n\times n}$. 
+% \begin{enumerate}
+  % \item 
+  % Let $v_1,\ldots,v_n\in\RR^n$. Then 
+  $$\langle X v_1,\ldots,X v_k\rangle = X\langle v_1,\ldots,v_k\rangle.$$
+  % \item Let $A\in\RR^{m\times n}$. Then $$C(X A)= X C(A).$$
+% \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+% We begin with (1).
+Let $$u\in\langle X v_1,\ldots,X v_k\rangle,$$ with the goal of showing that $$u\in X\langle v_1,\ldots,v_k\rangle.$$
+By definition of $\langle X v_1,\ldots,X v_k\rangle$, there are scalars $t_1,\ldots,t_k\in\RR$ such that
+$$
+u=t_1X v_1 + \cdots t_k X v_k.
+$$
+But $t_jX v_j = X(t_jv_j)$, so 
+\[
+u = X (t_1v_1) + \cdots X (t_k v_k). 
+\]
+Therefore, setting $$v:=t_1v_1+\cdots t_kv_k,$$ we have
+\[
+u = X(t_1v_1+\cdots t_kv_k) = X v.
+\]
+Evidently, $v\in \langle v_1,\ldots,v_k\rangle$.
+Thus, $u=X v$ with $v\in \langle v_1,\ldots,v_k\rangle$. Therefore, $$u\in X\langle v_1,\ldots,v_k\rangle.$$
+Since $u\in \langle X v_1,\ldots,X v_k\rangle$ was arbitrary, we conclude that
+$$\langle X v_1,\ldots,X v_k\rangle \subseteq X\langle v_1,\ldots,v_k\rangle.$$
+
+Conversely, Let $$u\in X\langle v_1,\ldots, v_k\rangle,$$ with the goal of showing that $$u\in \langle X v_1,\ldots, X v_k\rangle.$$
+Then there is an element $v\in \langle v_1,\ldots,v_k\rangle$ such that $u=X v$. As $v\in \langle v_1,\ldots,v_k\rangle$, there are scalars $t_1,\ldots,t_k$ such that $$v=t_1v_1+\cdots t_kv_k.$$
+Therefore,
+\begin{align*}
+u &= X v\\
+&= X (t_1v_1+\cdots + t_kv_k)\\
+&= X (t_1v_1) + \cdots X (t_kv_k)\\
+&= t_1(X v_1) + \cdots + t_k(X v_k)\\
+&\in \langle X v_1,\ldots, X v_k\rangle.
+\end{align*}
+Since $u\in X\langle v_1,\ldots,v_k\rangle$ was arbitrary, it follows that $$
+X\langle v_1,\ldots,v_k\rangle
+\subseteq
+\langle X v_1,\ldots,X v_k\rangle.
+$$
+Having proved the reverse inclusion above, statement (1) is proved. 
+
+% We prove (2). Observe that if
+% $$
+% A=\begin{bmatrix}a_1&\cdots & a_n\end{bmatrix},
+% $$
+% then
+% $$
+% XA = \begin{bmatrix}Xa_1&\cdots & Xa_n\end{bmatrix}.
+% $$
+% $C(XA)$ is the span of the column vectors of $XA$:
+% $$
+% C(XA) = \langle Xa_1,\ldots,Xa_n\rangle .
+% $$
+% But
+% $$
+% \langle Xa_1,\ldots,Xa_n\rangle = X\langle a_1,\ldots,a_n\rangle,
+% $$
+% by (1), so
+% $$
+% C(XA)=X\langle a_1,\ldots,a_n\rangle.
+% $$
+% The desired identity, $C(XA)=XC(A)$, now follows from the fact that 
+% \[
+% \langle a_1,\ldots,a_n\rangle = C(A).\qedhere
+% \]
+\end{proof}
+
+
+\begin{lemma}
+Theorem~\ref{theorem:pivot_cols_span_col_space} holds when $A$ is in reduced row echelon form.
+\end{lemma}
+
+\begin{proof}
+We must show that the nonpivot columns of $A$ belong to the span of the pivot columns of $A$.
+Let $(1, j_i)$, \ldots, $(r, j_r)$ be the positions of the leading ones of $A$, so that $a_{j_1},\ldots,a_{j_r}$ are the pivot columns of $A$.
+Since $A$ is in reduced row echelon form, a leading one of $A$ is the only nonzero element in its column.
+Therefore, $a_{j_i}=e_i\in\RR^m.$
+Thus, it suffices to show that the nonpivot columns of $A$ belong to $\langle e_1,\ldots,e_r\rangle\subseteq \RR^m$.
+
+Suppose $a_j$ is a nonpivot column of $A$.
+Suppose that $q$ pivot columns of $A$ lie to the left of $a_j$.
+Then $1\leq q\leq r$. (Why?)
+As $A$ is in reduced row echelon form, $a_{i,j}=0$ for $i>q$.
+Thus,
+\begin{align*}
+a_j &= a_{1,j}e_1 + \cdots + a_{m,j}e_m &\text{(property of $\{e_1,\ldots,e_m\}$)}\\
+&= a_{1,j}e_1 + \cdots + a_{q,j}e_q &\text{(as $a_{i,j}=0$ for $i>q$)}\\
+& \in \langle e_1,\ldots,e_q\rangle &\text{(by definition of $\langle e_1,\ldots,e_q\rangle$)}\\
+&\subseteq \langle e_1,\ldots,e_r\rangle &\text{(as $q\leq r$)},
+\end{align*}
+establishing the claim.
+\end{proof}
+
+\begin{proof}[{Proof of Theorem~\ref{theorem:pivot_cols_span_col_space}}]
+Let $\gamma\in\RR^{m\times m}$ be an invertible matrix such that $B= \gamma A$ is in reduced row echelon form. 
+Write
+$$
+B=\begin{bmatrix}b_1&\cdots&b_n\end{bmatrix}.
+$$
+Let $(1, j_i)$, \ldots, $(r, j_r)$ be the positions of the leading ones of $B$, so that $a_{j_1},\ldots,a_{j_r}$ are the pivot columns of $B$.
+Then, by Lemma ??,
+$$
+\langle b_1,\ldots,b_n\rangle = \langle b_{j_1},\ldots,b_{j_r}\rangle.
+$$
+Write
+$$
+A=\begin{bmatrix}a_1&\cdots&a_n\end{bmatrix}.
+$$
+Since $B=\gamma A$, $b_j = \gamma a_j$ for all $j$. Substituting in to the above identity, we get
+$$
+\langle \gamma a_1,\ldots,\gamma a_n\rangle = \langle \gamma a_{j_1},\ldots,\gamma a_{j_r}\rangle.
+$$
+By Lemma ??,
+$$
+\langle \gamma a_1,\ldots,\gamma a_n\rangle = \gamma \langle a_1,\ldots,a_n\rangle
+$$
+and
+$$
+\langle \gamma a_{j_1},\ldots,\gamma a_{j_r}\rangle = \gamma \langle a_{j_1},\ldots,a_{j_r}\rangle.
+$$
+Therefore,
+$$
+\gamma \langle a_1,\ldots,a_n\rangle = \gamma \langle a_{j_1},\ldots,a_{j_r}\rangle
+$$
+Cancelling the $\gamma$s (see Exercise~\ref{exercise:translation_preserves_inclusion}),  we get
+\[
+\langle a_1,\ldots,a_n\rangle =  \langle a_{j_1},\ldots,a_{j_r}\rangle\qedhere.
+\]
+\end{proof}
+
+\begin{exercise}\label{exercise:translation_preserves_inclusion}
+Let $U$ and $V$ be subspaces of $\RR^n$.
+\begin{enumerate}
+\item Let $X\in\RR^{m\times n}$. Prove: if $U\subseteq V$ then $X U\subseteq X V$.
+\item Show, by example, that $XU\subseteq XV$ need not imply $U\subseteq V$.
+\item Let $\gamma\in\RR^{n\times n}$ be an invertible matrix. Prove: $U\subseteq V$ if and only if $\gamma U\subseteq \gamma V$. 
+\end{enumerate}
+\end{exercise}
+
+\subsection{Sums of subspaces}
+
+\begin{definition}
+ Let $U$ and $V$ be subspaces of $\RR^n$.
+The \emph{sum of $U$ and $V$}, written $U + V$ is the set of sums $u+v$ for $u\in U$ and $v\in V$:
+$$
+U + V = \{u + v : u\in U,\,v\in V\}\subseteq\RR^n.
+$$
+\end{definition}
+
+\begin{theorem}
+  $U+ V$ is a subspace of $\RR^n$.
+\end{theorem}
+
+\begin{theorem}
+  $\langle S\rangle + \langle T\rangle = \langle S\cup T\rangle$.
+\end{theorem}
+
+\begin{definition}
+  Let $U_1,\ldots,U_k$ be subspaces of $\RR^n$. The \emph{sum of $U_1, \ldots, U_k$} is the set of sums $u_1+\cdots+u_k$, where $u_j\in U_j$:
+$$
+\sum_{j=1}^k U_j = U_1+\cdots + U_k = \{u_1+\cdots + u_k : u_1\in U_1,\ldots, u_k\in U_k\}.
+$$ 
+\end{definition}
+
+\begin{theorem}
+  $U_1+\cdots + U_k$ is a subspace of $\RR^n$.
+\end{theorem}
+
+\begin{exercise}
+  $\langle S_1\rangle + \cdots + \langle S_k\rangle = \langle S_1\cup\cdots\cup S_k\rangle$ 
+\end{exercise}
+
+\begin{exercise}
+  $\langle u_1,\ldots,u_k\rangle = \langle u_1\rangle + \cdots + \langle u_k\rangle$
+\end{exercise}
+
+\begin{exercise}
+  Prove that $(U_1+U_2)^\perp = U_1^\perp\cap U_2^\perp$. Generalize to $k$ subspaces.
+\end{exercise}
+
+
+\begin{exercise}
+  Prove that $A(U_1+U_2)=AU_1 + AU_2$ and that $A^{-1}(V_1+V_2)=A^{-1}V_1 + A^{-1}V_2$.
+Generalize to $k$ summands.
+\end{exercise}
+
+\section{Linear dependence and independence}
+
+  \begin{definition}
+    Let $v_1,\ldots,v_k\in\RR^n$.
+  A \emph{linear dependence relation among $v_1,\ldots,v_k$} is an identity of the form
+  $$
+  t_1v_1+\cdots t_kv_k=0,
+  $$
+  where $t_1,\ldots,t_k\in\RR$. Such a relation is \emph{trivial} if $t_1=0,\ldots, t_k=0$.
+
+   A set $S$ of vectors in $\RR^n$ is \emph{linearly independent} if the only linear dependence relation among elements of $S$ is the trivial one.
+  Otherwise, it's \emph{linearly dependent}.
+  \end{definition}
+
+  \begin{theorem}
+    $S$ is linearly independent if and only if every element of $\langle S\rangle$ can be written uniquely as a linear combination of elements of $S$.
+  \end{theorem}
+
+  \begin{definition}
+    A set $S$ of vectors in $\RR^n$ is \emph{orthogonal} if every pair of distinct vectors pair $S$ are orthogonal, i.e.,
+  \begin{center}
+    $u\cdot v = 0$ for all $u, v\in S$ with $u\neq v$.
+  \end{center}
+\end{definition}
+
+  \begin{theorem}
+    Let $S$ be an orthogonal set in $\RR^n$ with $0\notin S$.
+    Then $S$ is linearly independent.
+  \end{theorem}
+
+  \begin{theorem} Let $a_1,\ldots,a_n\in\RR^m$ be distinct vectors.
+  Then $\{a_1,\ldots,a_n\}$ is linearly independent if and only if the nullspace of the matrix
+  $$
+A := \begin{bmatrix}a_1&\cdots &a_n\end{bmatrix}
+  $$
+  is zero.
+\end{theorem}
+
+\begin{corollary}
+  The columns vectors of an invertible matrix are linearly independent.
+\end{corollary}
+
+  \begin{corollary} Suppose $u_1,\ldots,u_{k+1}$ are distinct vectors in $\langle v_1,\ldots,v_k\rangle$.
+  Then $\{u_1,\ldots,u_k\}$ is linearly dependent.
+  \end{corollary}
+
+  \begin{corollary}
+    A set of $n+1$ vectors in $\RR^n$ is linearly dependent.
+  \end{corollary}
+
+\begin{theorem}
+  Let $A\in\RR^{n\times n}$ be an invertible matrix.
+  Then vectors $v_1,\ldots,v_k\in\RR^n$ are linearly independent if and only if the vectors $Av_1,\ldots,Av_k$ are.
+\end{theorem}
+
+\begin{corollary}
+  The pivot columns of a matrix are linearly independent.
+\end{corollary}
+
+\begin{exercise}
+  Let $A\in\RR^{m\times n}$ and let $v_1\ldots,v_k\in \RR^n$.
+  If $Av_1,\ldots,Av_k$ are linearly dependent (resp., independent), does it follow that $v_1,\ldots,v_k$ are?
+\end{exercise}
+
+Linearly independent sets are ``minimal'' spanning sets:
+
+\begin{theorem}
+  Let $U$ be a subspace of $\RR^n$. A spanning set $S$ of $U$ is linearly independent if and only if no \underline{proper} subset of $S$ spans $U$.
+\end{theorem}
+
+\subsection{Linear independent subspaces}
+\subsubsection{Two subspaces}
+
+\begin{definition}
+  Subspaces $U_1$ and $U_2$ of $\RR^n$ are \emph{linearly independent} if the pair $(u_1, u_2)$ is linearly independent for all nonzero $u_1\in U_1$ and all nonzero $u_2\in U_2$.
+\end{definition}
+
+\begin{example}
+  Let $u_1$ and $u_2$ be linearly independent vectors in $\RR^n$.
+  Then $\langle u_1\rangle$ and $\langle u_2\rangle$ are linearly independent.
+  In other words, distinct lines are linearly independent.
+
+  To see this, let $x_1\in \langle u_1\rangle$ and let $x_2\in \langle u_2\rangle$.
+  We need to show that $x_1$ and $x_2$ are linearly independent.
+  So, suppose $s_1x_1+s_2x_2=0$. We will show that $s_1=0$ and $s_2=0$.
+  Since $x_1\in \langle u_1\rangle$, $x_1=t_1u_1$ for some nonero $t_1\in\RR$.
+  Symmetrically, $x_2 = t_2u_2$ for some nonzero $t_2\in \RR$. Substituting, we get
+  $$
+  s_1x_1 + s_2x_2 = s_1t_1u_1 + s_2t_2u_2.
+  $$
+  Since $u_1$ and $u_2$ are assumed linearly independent, we must have $s_1t_1=0$ and $s_2t_2=0$.
+  Thus, $s_1=0$ and $s_2=0$ as $t_1$ and $t_2$ are nonzero.
+\end{example}
+
+\begin{theorem}
+  $U_1$ and $U_2$ are linearly independent if and only if $U_1\cap U_2 = \{0\}$.
+\end{theorem}
+
+\begin{example}
+Let 
+$$U = N\left(\begin{bmatrix}1&1&1\end{bmatrix}\right),\quad
+V=N\left(\begin{bmatrix}1&2&3\end{bmatrix}\right).$$
+  Then
+  $$
+  U\cap V = N\left(
+    \begin{bmatrix}1&1&1\\1&2&3\end{bmatrix}
+  \right) = 
+\left\langle\begin{bmatrix}1\\-2\\1\end{bmatrix}\right\rangle.
+  $$
+  In particular $U\cap V\neq \{0\}$.
+\end{example}
+
+\begin{exercise}
+  Let $u_1$ and $u_2$ be linearly independent vectors in $\RR^3$.
+  Prove that $\{u_1\}^\perp$ and $\{u_2\}^\perp$ are linearly dependent.
+  Give examples, to show that this result fails if $\RR^3$ is replaced by $\RR^n$ with $n>3$.
+\end{exercise}
+
+ \begin{corollary}
+  Let $\lambda_1$ and $\lambda_2$ be distinct eigenvalues of $A$. Then the eigenspaces $E_{\lambda_1}(A)$ and $E_{\lambda_2}(A)$ are linearly independent.
+ \end{corollary}
+
+ \begin{proof}
+  Do Exercise~\ref{exercise:distinct_eigenspaces_independent}.
+ \end{proof}
+
+ \begin{exercise}\label{exercise:distinct_eigenspaces_independent}
+Let $\lambda_1$ and $\lambda_2$ be distinct real numbers and let $A\in\RR^{n\times n}$.
+Prove that $$E_{\lambda_1}(A)\cap E_{\lambda_2}(A) = \{0\}.$$
+ \end{exercise}
+
+\begin{exercise}
+  Let $U_1$ and $U_2$ be linearly independent subspaces of $\RR^n$ and let $S_1$ and $S_2$ be subsets of $U_1$ and $U_2$, respectively.
+  Then $S_1\cup S_2$ is a linearly independent set if and only if both $S_1$ and $S_2$ are.
+\end{exercise}
+
+\begin{definition}
+  Subspaces $U_1$ and $U_2$ of $\RR^n$ are orthogonal if every element of $U_1$ is orthogonal to every element of $U_2$, i.e.,
+  \begin{center}
+    if $u_1\cdot u_2=0$ for all $u_1\in U_1$ and all $u_2\in U_2$.
+  \end{center}
+\end{definition}
+
+\begin{example}
+  Let $U$ be a subspace of $\RR^n$. Then $U$ and $U^\perp$ are orthogonal.
+\end{example}
+
+\begin{exercise}
+  Let $U_1$ and $U_2$ are orthogonal subspaces of $\RR^n$.
+  Prove that $U_1$ and $U_2$ are linearly independent.
+\end{exercise}
+
+% \begin{proof}
+%   We will show that $U_1\cap U_2=\{0\}$. Since $U_1$ and $U_2$ are both subspaces of $\RR^n$, $0$ belongs to both $U_1$ and $U_2$ and, hence, to their intersection.
+%   Now suppose $u\in U_1\cap U_2$. Then $u\cdot u=0$ as $u\in U_1$, $u\in U_2$, and $U_1$ and $U_2$ are orthogonal.
+%   But $u\cdot u=0$ implies $u=0$. Thus, $0$ is the only element of $U_1\cap U_2$, i.e., $U_1\cap U_2=\{0\}$.
+% \end{proof}
+
+\subsubsection{$k$ subspaces}
+
+\begin{definition}
+  Subspaces $U_1,\ldots,U_k$ of $\RR^n$ are \emph{linearly independent} if the sequence $(u_1,\ldots, u_k)$ is linearly independent for all $u_1\in U_1,\ldots,u_k\in U_k$. 
+\end{definition}
+
+\begin{theorem}
+  Let $A\in\RR^{n\times n}$ and let $\Lambda$ be the set of eigenvalues of $A$.
+  Then the eigenspaces $E_\lambda(A)$, $\lambda\in \Lambda$, are linearly independent.
+  
+ % $\lambda_1,\ldots,\lambda_k$ be distinct eigenvalues of $A$.
+ % Then the eigenspaces $E_{\lambda_1}(A),\ldots,E_{\lambda_k}(A)$ are linearly independent.
+\end{theorem}
+\begin{proof}
+  Suppose not.
+  Let $\Lambda'$ be a subset of $\Lambda$, minimal with respect to the property that the eigenspaces $E_\lambda(A)$, $\lambda\in \Lambda'$, are linearly dependent.
+  (This means: if $\Lambda''$ is a proper subset of $\Lambda'$, then the $E_\lambda(A)$, $\lambda\in \Lambda''$, are linearly indepedent.)
+  Note that $k\geq 2$. (Why?)
+
+  Suppose $\Lambda'=\{\lambda_1,\ldots,\lambda_k\}$ with the $\lambda_j$ pairwise distinct.
+  By the linear dependence of $\Lambda'$, there are vectors $x_j\in E_{\lambda_j}(A)$ such that $\{x_1,\ldots,x_k\}$ is linearly dependent.
+  Thus, there are scalars $t_1,\ldots,t_k$, not all zero, such that
+  \begin{equation}\label{equation:distinc_eigenspaces_independent_1}
+  0=t_1x_1+\cdots t_kx_k.
+  \end{equation}
+  In fact, by the minimality of $\Lambda'$, $t_1,\ldots,t_k$ must \emph{all} be nonzero. (Explain.)
+  Multiply both sides of this identity by $A$:
+  $$0 =A(t_1x_1+\cdots t_kx_k)
+= t_1Ax_1+\cdots + t_kAx_k.
+$$
+Since $x_j$ is a $\lambda_j$-eigenvector of $A$,
+\begin{equation}\label{equation:distinc_eigenspaces_independent_2}
+  0 = t_1\lambda_1x_1 + \cdots t_k\lambda_kx_k.
+\end{equation}
+Subtracing $\lambda_k$ times~\eqref{equation:distinc_eigenspaces_independent_1} from~\eqref{equation:distinc_eigenspaces_independent_2} yields
+\begin{align*}
+0 &= 0 - \lambda_k(0) \\
+&= t_1\lambda_1x_1+\cdots t_k\lambda_kx_k - \lambda_k(t_1x_1+\cdots t_kx_k)\\
+&=t_1(\lambda_1-\lambda_k) + \cdots + t_{k-1}(\lambda_{k-1}-\lambda_k).
+\end{align*}
+(This the right hand side of this identity makes sense as $k\geq 2$.)
+Since the $\lambda_j$ are pairwise distinct, $\lambda_j-\lambda_k\neq 0$ for $j\leq k-1$.
+The $t_j$ being nonzero, $t_j(\lambda_j-\lambda_k)\neq 0$ for all $j\leq k-1$.
+Thus,
+$$
+0=t_1(\lambda_1-\lambda_k) + \cdots + t_{k-1}(\lambda_{k-1}-\lambda_k)
+$$
+is a nontrivial linear depedence relation among the eigenvectors $x_1,\ldots,x_{k-1}$ and, therefore,
+the eigenspaces $E_{\lambda}(A)$, $\lambda\in \Lambda'':=\{\lambda_1,\ldots,\lambda_{k-1}\}$, are linear dependent.
+But $\Lambda''$ has fewer elements than $\Lambda'$, contradicting the minimality of the latter.
+\end{proof}
+
+\begin{theorem}
+  Let $U_1,\ldots,U_k$ be pairwise orthogonal subspaces of $\RR^n$. Then $U_1,\ldots,U_k$ are linearly independent.
+\end{theorem}
+
+\begin{proof}
+  Let $u_j\in U_j$ be a nonzero vector and suppose that
+  $$t_1u_1+\cdots t_ku_k=0.$$
+  We must show that $t_j=0$ for all $j$.
+  Suppose $1\leq j\leq k$.
+  Take the dot product of each side of the above identity with $u_j$:
+  $$
+  t_1(u_1\cdot u_j) + \cdots + t_j(u_j\cdot u_j) + \cdots t_k(u_k\cdot u_j) = 0\cdot u_j = 0.
+  $$
+  Since the $U_1, \ldots, U_k$ are pairwise orthogonal, $u_i\cdot u_j=0$ if $i\neq j$.
+  Therefore,
+  $$
+  t_j(u_j\cdot u_j) = 0.
+  $$
+  But $u_j\cdot u_j\neq 0$ as $u_j\neq 0$, so $t_j=0$, as was to be shown.
+\end{proof}
+
+\begin{exercise}
+  Suppose $U_1,\ldots,U_j$ are orthogonal. Prove that $U_i$ and $\sum_{j\neq i}U_j$ are orthogonal for all $i$.
+\end{exercise}
+
+\begin{theorem}
+  The following are equivalent for subspaces $U_1,\ldots,U_k$ of $\RR^n$:
+  \begin{enumerate}
+    \item $U_1,\ldots,U_k$ are linearly independent.
+    \item $U_i$ and $\sum_{j\neq i} U_i$ are linearly independent for all $i$, i.e.,
+  $$
+  U_i\cap \sum_{j\neq i} U_i = \{0\},
+  $$
+  for all $i$.
+  \item Every element of $U_1+\cdots U_k$ can be written uniquely in the form $u_1+\cdots u_k$, where $u_1\in U_1,\ldots,u_k\in U_k$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+  Let $A\in\RR^{n\times n}$ and let $\lambda_1,\ldots,\lambda_k$ be the distinct eigenvalues of $A$.
+  Then the eigenspaces $E_{\lambda_1}(A),\ldots,E_{\lambda_k}(A)$ are linearly independent.
+\end{theorem}
+
+\section{Basis and dimension}
+
+\begin{definition}
+  Let $U$ be a nonzero subspace of $\RR^n$.
+  A set $B$ of vectors in $U$ is a \emph{basis of $U$} if $B$ is linearly independent and $B$ spans $U$.
+\end{definition}
+
+\begin{theorem}
+  The set of pivot columns of $A$ is a basis of $C(A)$.
+\end{theorem}
+
+
+\end{document}

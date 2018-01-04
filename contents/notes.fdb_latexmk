@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1515001182 "notes.tex" "notes.pdf" "notes" 1515001183
-  "./notes.tex" 1515001181 31794 ed110e4a9efdaceaa0c3399954241634 ""
+["pdflatex"] 1515089455 "notes.tex" "notes.pdf" "notes" 1515089456
+  "./notes.tex" 1515089455 43617 dc5f9debc6baf58e6135c90d836dedbe ""
   "c:/texlive/2015/texmf-dist/fonts/map/fontname/texfonts.map" 1453920685 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "c:/texlive/2015/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1453918112 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2015/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1453918112 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -35,6 +35,7 @@
   "c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1453918113 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2015/texmf-dist/tex/latex/amscls/amsart.cls" 1453918095 61293 a0612b81435f5a15e07db7630c3b4bb1 ""
   "c:/texlive/2015/texmf-dist/tex/latex/amsfonts/amsfonts.sty" 1453918113 5949 3f3fd50a8cc94c3d4cbf4fc66cd3df1c ""
+  "c:/texlive/2015/texmf-dist/tex/latex/amsfonts/amssymb.sty" 1453918113 13829 94730e64147574077f8ecfea9bb69af4 ""
   "c:/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd" 1453918113 961 6518c6525a34feb5e8250ffa91731cff ""
   "c:/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd" 1453918113 961 d02606146ba5601b5645f987c92e6193 ""
   "c:/texlive/2015/texmf-dist/tex/latex/amsmath/amsbsy.sty" 1453918124 2412 2d98314dc5be38f455f8890deeb2d091 ""
@@ -42,12 +43,13 @@
   "c:/texlive/2015/texmf-dist/tex/latex/amsmath/amsmath.sty" 1453918124 79178 b2e326c351e876df0e5e23df2e02441b ""
   "c:/texlive/2015/texmf-dist/tex/latex/amsmath/amsopn.sty" 1453918124 4082 502152465aedb8f6a3c4b0b7c0fa8ae5 ""
   "c:/texlive/2015/texmf-dist/tex/latex/amsmath/amstext.sty" 1453918124 2637 846ebe982d3549c7ede7ce135456f54a ""
+  "c:/texlive/2015/texmf-dist/tex/latex/preprint/fullpage.sty" 1453924667 2789 05b418f78b224ec872f5b11081138605 ""
   "c:/texlive/2015/texmf-dist/web2c/texmf.cnf" 1453921521 31985 3b2aa1e4e73426e2011ec5231ac92e0f ""
   "c:/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1453928161 1832734 f21527d129bb5a25793cd7848a2e7684 ""
   "c:/texlive/2015/texmf-var/web2c/pdftex/pdflatex.fmt" 1453928244 3850854 367176891a0cf2f01d2358a32e61423a ""
   "c:/texlive/2015/texmf.cnf" 1453928147 497 7277663fd190ea5a4fe922b182dc7be2 ""
-  "notes.aux" 1515001183 2271 55c5c2bf0ba5c4b24c6bba80faa2c6bc ""
-  "notes.tex" 1515001181 31794 ed110e4a9efdaceaa0c3399954241634 ""
+  "notes.aux" 1515089456 2935 c93f1748aba68a73dc324cb02ca43e3e ""
+  "notes.tex" 1515089455 43617 dc5f9debc6baf58e6135c90d836dedbe ""
   (generated)
   "notes.aux"
   "notes.log"

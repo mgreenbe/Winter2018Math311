@@ -1,6 +1,6 @@
-\documentclass[fullpage]{amsart}
+\documentclass{amsart}
 
-\usepackage{amsmath, amsthm}
+\usepackage{fullpage, amsmath, amsthm,amssymb}
 
 \newcommand{\RR}{\mathbb{R}}
 \DeclareMathOperator{\rref}{rref}
@@ -19,6 +19,7 @@
 \begin{document}
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0em}
+\setlength{\itemsep}{0.5em}
 
 \section{Subspaces of $\RR^n$}
 
@@ -92,6 +93,21 @@ Corollary: $E_\lambda(A)$ is a subspace of $\RR^n$.
   $E_\lambda(A) = N(\lambda I - A)$, and nullspaces are subspaces.
 \end{proof}
 
+\begin{theorem}\label{theorem:invertible_implies_zero_nullspace}
+Let $A\in\RR^{n\times n}$ be an invertible matrix. Then $N(A)=\{0\}$.
+\end{theorem}
+
+\begin{proof}
+Since $N(A)$ is a subspace of $\RR^n$, $\{0\}\subseteq N(A)$.
+To prove the reverse inclusion, suppose that $x\in N(A)$, i.e., that $Ax=0$.
+Since $A$ is invertible,
+\[
+x = A^{-1}Ax = A^{-1}0=0.
+\]
+Therefore, $x\in \{0\}$.
+Since $x\in N(A)$ was arbitrary, $N(A)\subseteq \{0\}$.
+\end{proof}
+
 \subsection{Orthogonal complement}
 \begin{definition}
   Let $S$ be a subset of $\RR^n$.
@@ -159,7 +175,7 @@ $$
 \begin{theorem}
   $AU$ is a subspace of $\RR^m$.
 \end{theorem}
-
+ 
 The image of $U=\RR^n$ plays a special role and gets a special name.
 \begin{definition}
   Let $A\in \RR^{m\times n}$. The image of $\RR^n$ under $A$ is called the \emph{column space of $A$} and written $C(A)$:
@@ -167,6 +183,20 @@ The image of $U=\RR^n$ plays a special role and gets a special name.
   C(A) = A\RR^n = \{Ax : x\in\RR^n\}\subseteq\RR^m.
   $$
 \end{definition}
+
+\begin{theorem}\label{theorem:col_space_of_invertible_matrix}
+Let $A\in\RR^{n\times n}$ be an invertible matrix. Then $C(A)=\RR^n$.
+\end{theorem}
+
+\begin{proof}
+Clearly, $C(A)\subset\RR^n$.
+To prove the reverse inclusion, let $b\in\RR^n$. Since $A$ is invertible, we may set $x=A^{-1}b$. Then 
+$b=Ax$, so $b\in C(A)$, by definition of $C(A)$. Since $b\in\RR^n$ was arbitrary, $\RR^n\subseteq C(A)$.
+\end{proof}
+
+\begin{remark}
+We'll see, in ??, that $A$ is invertible \emph{if and only if} $C(A)=\RR^n$.
+\end{remark}
 
 \subsection{Linear combinations}
 
@@ -280,7 +310,7 @@ Let $S$ be a subset of $\RR^n$. Prove that $S\subseteq\langle S\rangle$.
 \begin{exercise}\label{exercise:span_monotonicity}
   Let $S$ and $T$ be subsets of $\RR^n$. Prove that if $S\subseteq T$ then $\langle S\rangle\subseteq\langle T\rangle$. Is the converse true?
 \end{exercise}
-\begin{theorem}
+\begin{theorem}\label{theorem:span_does_not_grow}
   Let $u,v_1,\ldots,v_k\in\RR^n$. Then $u\in \langle v_1,\ldots,v_k\rangle$ if and only if
 \begin{equation}\label{equation:span_monotonicity_1}
   \langle v_1,\ldots,v_k\rangle = \langle u, v_1,\ldots,v_k\rangle.
@@ -566,74 +596,273 @@ Generalize to $k$ summands.
 \section{Linear dependence and independence}
 
   \begin{definition}
-    Let $v_1,\ldots,v_k\in\RR^n$.
-  A \emph{linear dependence relation among $v_1,\ldots,v_k$} is an identity of the form
+    Let $a_1,\ldots,a_n$ be a list of vectors in $\RR^m$.
+  A \emph{linear dependence relation among $a_1,\ldots,a_n$} is an identity of the form
   $$
-  t_1v_1+\cdots t_kv_k=0,
+  x_1a_1+\cdots x_na_n=0,
   $$
-  where $t_1,\ldots,t_k\in\RR$. Such a relation is \emph{trivial} if $t_1=0,\ldots, t_k=0$.
-
-   A set $S$ of vectors in $\RR^n$ is \emph{linearly independent} if the only linear dependence relation among elements of $S$ is the trivial one.
-  Otherwise, it's \emph{linearly dependent}.
-  \end{definition}
-
-  \begin{theorem}
-    $S$ is linearly independent if and only if every element of $\langle S\rangle$ can be written uniquely as a linear combination of elements of $S$.
-  \end{theorem}
-
-  \begin{definition}
-    A set $S$ of vectors in $\RR^n$ is \emph{orthogonal} if every pair of distinct vectors pair $S$ are orthogonal, i.e.,
-  \begin{center}
-    $u\cdot v = 0$ for all $u, v\in S$ with $u\neq v$.
-  \end{center}
+  where $x_1,\ldots,x_n\in\RR$. Such a relation is \emph{trivial} if $x_1=0,\ldots, x_n=0$.
 \end{definition}
 
-  \begin{theorem}
-    Let $S$ be an orthogonal set in $\RR^n$ with $0\notin S$.
-    Then $S$ is linearly independent.
-  \end{theorem}
+\begin{remark}\label{remark:lin_comb_matvec}
+Writing
+\[
+A=\begin{bmatrix}a_1&\cdots&a_n\end{bmatrix}\in \RR^{m\times n},\quad
+x=\begin{bmatrix}x_1\\\vdots\\x_m\end{bmatrix}\in\RR^m,
+\]
+and noting that
+\[
+x_1a_1+\cdots x_na_n=Ax,
+\]
+we see that a linear dependence relation among $v_1,\ldots,v_n$ is nothing more than an identity of the form
+\[
+Ax=0.
+\]
+This linear relation is trivial if and only if $x=0$.
+\end{remark}
 
-  \begin{theorem} Let $a_1,\ldots,a_n\in\RR^m$ be distinct vectors.
-  Then $\{a_1,\ldots,a_n\}$ is linearly independent if and only if the nullspace of the matrix
-  $$
-A := \begin{bmatrix}a_1&\cdots &a_n\end{bmatrix}
-  $$
-  is zero.
+\begin{definition}\hfill
+\begin{enumerate}
+  \setlength{\itemsep}{0.5em}
+\item A finite list $a_1,\ldots,a_n$ of vectors in $\RR^m$ is \emph{linearly independent} if the only linear dependence relation among them is the trivial one. Otherwise, the list is said to be \emph{linearly dependent}.
+\item A set $S$ (possibly infinite!) of vectors in $\RR^n$ is \emph{linearly independent} if, for every list finite $a_1,\ldots,a_n$ of pairwise distinct vectors drawn from $S$, the only linear dependence relation among $a_1,\ldots,a_n$ is the trivial one.  Otherwise, is said to be \emph{linearly dependent}.
+\end{enumerate}
+(Lists are allowed to have repeated entries. Sets have no notion of repetition.)
+\end{definition}
+
+\begin{remark}
+Let $S=\{a_1,\ldots,a_n\}$ be a finite set of vectors in $\RR^m$.
+Suppose $a_i\neq a_j$ if $i\neq j$.
+Then the set $S$ is linearly independent if and only if the list $a_1,\ldots,a_n$ is linearly independent. (Why?)
+\end{remark}
+
+\begin{theorem}\hfill
+\begin{enumerate}
+  \item A list of vectors containing repeated entries is linearly dependent.
+  \item A list or set containing the zero vector is linearly dependent.
+\end{enumerate}
 \end{theorem}
 
-\begin{corollary}
-  The columns vectors of an invertible matrix are linearly independent.
+\begin{proof}\hfill
+\begin{enumerate}
+  \item Let $a_1,\ldots,a_n$ be a list of vectors in $\RR^m$.
+  Suppose that $a_i=a_j$, where $1\leq i<j\leq n$.
+  Then the vectors $a_1,\ldots,a_n$ satisfy the nontrivial linear dependence relation
+  \[
+  x_1a_1+\cdots x_na_n=0,
+  \]
+  where $x_i=1$, $x_j=-1$, and $x_k=0$ if $k\neq i,j$.
+  Therefore, the vectors $a_1,\ldots,a_n$ are linearly dependent.
+
+  \item Let $a_1,\ldots,a_n$ be a list of vectors.
+  Suppose it contains the zero vector; say $a_i=0$, where $1\leq i\leq n$. 
+  Then the vectors $a_1,\ldots,a_n$ satisfy the nontrivial linear dependence relation
+  \[
+  x_1a_1+\cdots x_na_n=0,
+  \]
+  where $x_i=1$ and $x_j=0$ if $j\neq i$.
+  A set $S$ containing the zero vector is linearly dependent as the list of elements drawn from $S$ with the single entry $0$ contains no repeated entries and is linearly dependent, by the above argument.
+\end{enumerate}
+\end{proof}
+
+\begin{example}
+The list of vectors $e_1,\ldots,e_m$ are linearly independent, where $e_j\in \RR^m$ is the $j$-th standard basis vector.
+
+To see this, observe that
+\[
+x_1e_1+\cdots x_me_m = \begin{bmatrix}x_1\\\vdots\\x_m\end{bmatrix}.
+\]
+Thus, $x_1e_1+\cdots + x_me_m=0$ if and only if the $x_j$ are all zero.
+In other words, the only linear dependence relation satisfied by the vectors $e_1,\ldots,e_m$ is the trivial one.
+\end{example}
+
+\begin{theorem}\label{theorem:lin_ind_cols_iff_zero_nullspace}
+Vectors $a_1,\ldots,a_n$ in $\RR^m$ are linearly dependent if and only if the nullspace of the matrix
+\[
+A:=\begin{bmatrix}a_1&\cdots&a_n\end{bmatrix}
+\]
+is nonzero.
+\end{theorem}
+\begin{proof}
+By Remark~\ref{remark:lin_comb_matvec}, the vectors $a_1,\ldots, a_n$ satisfy a nontrivial linear dependence relation, i.e., are linearly dependent, if and only if $Ax=0$ for some nonzero $x\in\RR^n$, i.e., if and only if $N(A)\neq\{0\}$.
+\end{proof}
+
+\begin{exercise}\hfill
+\begin{enumerate}
+\item Prove that a superlist (resp., superset) of a linearly dependent list (resp., set) of vectors is linearly dependent.
+\item Prove that a sublist (resp., subset) of a linearly independent list (resp., set) of vectors is linearly independent.
+\end{enumerate}
+\end{exercise}
+
+
+
+\begin{corollary}\label{corollary:col_vectors_of_invertible_matrix_lin_ind}
+  Let $A$ be an invertible matrix.
+  Then the column vectors of $A$ are linearly independent.
 \end{corollary}
 
-  \begin{corollary} Suppose $u_1,\ldots,u_{k+1}$ are distinct vectors in $\langle v_1,\ldots,v_k\rangle$.
-  Then $\{u_1,\ldots,u_k\}$ is linearly dependent.
+\begin{proof}
+  Since $A$ is invertible, $N(A)=\{0\}$ by Theorem~\ref{theorem:invertible_implies_zero_nullspace}.
+  Therefore, by Theorem~\ref{theorem:lin_ind_cols_iff_zero_nullspace}, the column vectors of $A$ are linearly independent.
+\end{proof}
+
+\begin{remark}
+We will see, in ??, that a square matrix $A$ is invertible \emph{if and only if} its column vectors are linearly independent.
+\end{remark}
+
+  \begin{corollary}\label{corollary:too_many_vectors}
+  Suppose $u_1,\ldots,u_{k+1}$ are distinct vectors in $\langle v_1,\ldots,v_k\rangle$.
+  Then $\{u_1,\ldots,u_{k+1}\}$ is linearly dependent.
   \end{corollary}
 
-  \begin{corollary}
-    A set of $n+1$ vectors in $\RR^n$ is linearly dependent.
+   \begin{corollary}\label{corollary:lin_ind_subset_Rn_small}
+    A linearly independent set in $\RR^n$ has at most $n$ elements.
   \end{corollary}
 
-\begin{theorem}
-  Let $A\in\RR^{n\times n}$ be an invertible matrix.
-  Then vectors $v_1,\ldots,v_k\in\RR^n$ are linearly independent if and only if the vectors $Av_1,\ldots,Av_k$ are.
+  \begin{theorem}\label{theorem:independence_of_matvecs}
+  Let $\gamma\in\RR^{n\times n}$ be an invertible matrix.
+  Then vectors $v_1,\ldots,v_k\in\RR^n$ are linearly independent if and only if the vectors $\gamma v_1,\ldots,\gamma v_k$ are.
 \end{theorem}
 
-\begin{corollary}
+\begin{proof}
+Suppose $v_1,\ldots,v_k$ are linearly independent.
+We want to show that $\gamma v_1,\ldots,\gamma v_k$ are, too
+Suppose $\gamma v_1,\ldots,\gamma v_k$ satisfy the linear dependence relation
+\begin{equation}\label{equation:independence_of_matvecs1}
+0 = t_1(\gamma v_1) + \cdots t_k(\gamma v_k).
+\end{equation}
+We'll show that this linear dependence relation is, necessarily, trivial.
+Since $t_j(\gamma v_j) = \gamma (t_jv_j)$,
+\begin{align*}
+0 &= \gamma (t_1 v_1) + \cdots \gamma(t_k v_k)\\
+&= \gamma(t_1v_1 + \cdots + t_kv_k).
+\end{align*}
+Multiplying both sides of this identity by $\gamma^{-1}$ yields
+\[
+0=t_1v_1+\cdots+ t_kv_k.
+\]
+Since $v_1,\ldots,v_k$ are linearly independent, the $t_j$ must all be zero.
+Thus, the linear dependence relation~\eqref{equation:independence_of_matvecs1} is trivial, as was to be shown.
+
+Conversely, suppose the vectors $\gamma v_1,\ldots,\gamma v_k$ are linearly independent.
+By the above argument, applied with $\gamma v_j$ playing the role of $v_j$ and $\gamma^{-1}$ playing the role of $\gamma$, the vectors
+\[
+\gamma^{-1}\gamma v_1,\ldots,\gamma^{-1}\gamma v_k
+\]
+are linearly independent. But $\gamma^{-1}\gamma v_j=v_j$, so the vectors $v_1,\ldots,v_k$ are linearly independent, as was to be shown.
+\end{proof}
+
+
+\begin{corollary}\label{corollary:piv_cols_lin_ind}
   The pivot columns of a matrix are linearly independent.
 \end{corollary}
 
+\begin{proof}
+Let $\gamma$ be an invertible matrix such that $R:=\gamma A$ is in reduced row echelon form.
+Let $r$ be the number of nonzero rows in $R$.
+Then the pivot columns of $R$ are $e_1,\ldots,e_r\in\RR^m$, clearly linearly independent.
+The pivot columns of $A$ are $\gamma^{-1}e_1,\ldots,\gamma^{-1}e_r$.
+These vectors are linearly independent by Theorem~\ref{theorem:independence_of_matvecs}.
+\end{proof}
+
 \begin{exercise}
   Let $A\in\RR^{m\times n}$ and let $v_1\ldots,v_k\in \RR^n$.
-  If $Av_1,\ldots,Av_k$ are linearly dependent (resp., independent), does it follow that $v_1,\ldots,v_k$ are?
+  \begin{enumerate}
+    \item Prove that if $v_1,\ldots, v_k$ are linearly dependent, then so are $Av_1,\ldots,Av_k$.
+    \item If $Av_1,\ldots,Av_k$ are linearly dependent (resp., independent), does it follow that $v_1,\ldots,v_k$ are?
+\end{enumerate}
 \end{exercise}
 
 Linearly independent sets are ``minimal'' spanning sets:
 
 \begin{theorem}
-  Let $U$ be a subspace of $\RR^n$. A spanning set $S$ of $U$ is linearly independent if and only if no \underline{proper} subset of $S$ spans $U$.
+Let $S=\{v_1,\ldots,v_k\}$ be a set of vectors in $\RR^n$. Then $S$ is linearly dependent if and only if 
+\[
+\langle S\setminus\{v_j\}\rangle = \langle S\rangle,
+\]
+for some $j$ with $1\leq j\leq k$.
 \end{theorem}
 
-\subsection{Linear independent subspaces}
+\begin{proof}
+Suppose $S$ is linearly dependent. Then there are scalars $t_1,\ldots,t_k$, not all zero, such that
+\[
+0=t_1v_1+\cdots t_kv_k.
+\]
+We may assume, without loss of generality, that $t_k\neq 0$.
+Then
+\begin{align*}
+v_k &= -\frac{t_1}{t_k}v_1 - \cdots - \frac{t_{k-1}}{t_k}{v_{k-1}}\\
+&\in \langle v_1,\ldots,v_{k-1}\rangle.
+\end{align*}
+By Theorem~\ref{theorem:span_does_not_grow},
+\[
+\langle v_1,\ldots,v_{k-1}\rangle\\
+= \langle v_1,\ldots,v_{k-1},v_k\rangle. 
+\]
+Therefore,
+\begin{align*}
+\langle S\setminus \{v_k\}\rangle &= \langle v_1,\ldots,v_{k-1}\rangle\\
+&= \langle v_1,\ldots,v_{k-1},v_k\rangle\\
+&= \langle S\rangle.
+\end{align*}
+as was to be shown.
+
+Conversely, suppose that
+\[
+\langle S\setminus\{v_j\}\rangle = \langle S\rangle.
+\]
+for some $j$ with $1\leq j\leq k$.
+Then $S$ is a $k$-element, spanning subset of $\langle S\rangle$, a subspace of $\RR^n$ spanned by the $k-1$-element set $S\setminus\{v_j\}$. By Corollary~\ref{corollary:too_many_vectors}, $S$ is linearly dependent.
+\end{proof}
+
+\begin{corollary}
+  Let $U$ be a subspace of $\RR^n$ and let $S$ be a spanning subset of $U$. Then $S$ is linearly independent if and only if, for every $v\in S$, the set $S\setminus\{v\}$ does not span $U$.
+\end{corollary}
+
+\begin{proof}
+Let $S$ be a linearly independent, spanning subset of $U$ and let $T$ be a proper subset of $U$.
+We must show that $T$ does not span $U$.
+Suppose, to the contrary, that $T$ spans $U$.
+As $T\subsetneq S$, there is an element $u\in S$ with $u\notin T$.
+
+
+Suppose the proper subset $T$ of $S$ spans $U$.
+We must show that $S$ is linearly dependent.
+As $T\subsetneq S$, there is an element $u\in S$ with $u\notin T$.
+Since $T$ spans $U$ and
+$$T\subseteq S\setminus \{u\}\subseteq U,$$
+$S\setminus \{u\}$ must span $U$ as well.
+As $$u\in S\subset U = \langle S\setminus \{u\}\rangle,$$
+the set
+\[
+\left(S\setminus \{u\}\right)\cup \{u\}
+\]
+is linearly dependent, by Theorem ??.
+But
+\[
+\left(S\setminus \{u\}\right)\cup \{u\}=S,
+\]
+so $S$ is linearly dependent.
+\end{proof}
+
+
+\begin{theorem}
+  $S$ is linearly independent if and only if every element of $\langle S\rangle$ can be written uniquely as a linear combination of elements of $S$.
+\end{theorem}
+
+\begin{definition}
+  A set $S$ of vectors in $\RR^n$ is \emph{orthogonal} if every pair of distinct vectors $S$ are orthogonal, i.e.,
+  \begin{center}
+    $u\cdot v = 0$ for all $u, v\in S$ with $u\neq v$.
+  \end{center}
+\end{definition}
+
+\begin{theorem}
+  Let $S$ be an orthogonal set in $\RR^n$ with $0\notin S$.
+  Then $S$ is linearly independent.
+\end{theorem}
+
+\subsection{Linearly independent subspaces}
 \subsubsection{Two subspaces}
 
 \begin{definition}
@@ -823,9 +1052,58 @@ But $\Lambda''$ has fewer elements than $\Lambda'$, contradicting the minimality
   A set $B$ of vectors in $U$ is a \emph{basis of $U$} if $B$ is linearly independent and $B$ spans $U$.
 \end{definition}
 
+\begin{example}
+The set $\{e_1,\ldots,e_n\}$ is a basis of $\RR^n$.
+\end{example}
+
+\begin{theorem}
+Let $A\in\RR^{n\times n}$ be an invertible matrix. Then the set of column vectors of $A$ is a basis of $\RR^n$.
+\end{theorem}
+\begin{proof}
+By Corollary~\ref{corollary:col_vectors_of_invertible_matrix_lin_ind}, the column vectors of $A$ are linearly independent. To see that the column vectors of $A$ span $\RR^n$, observe:
+\begin{align*}
+\langle a_1,\ldots,a_n\rangle &= C(A) &\text{(by definition of C(A))}\\
+&= \RR^n&\text{(by Theorem~\ref{theorem:col_space_of_invertible_matrix})}.&\qedhere
+\end{align*}
+\end{proof}
+
 \begin{theorem}
   The set of pivot columns of $A$ is a basis of $C(A)$.
 \end{theorem}
+\begin{proof}
+The pivot columns of $A$ are linearly independent by Corollary~\ref{corollary:piv_cols_lin_ind}. They  span $C(A)$ by Theorem~\ref{theorem:pivot_cols_span_col_space}.
+\end{proof}
 
+\begin{theorem}\label{theorem:basis_containing_S}
+Let $U$ be a subspace of $\RR^n$ and let $S$ be a linearly independent subset of $U$. Then there is a basis $B$ of $U$ containing $S$.
+\end{theorem}
 
+\begin{proof}
+Let $B$ be a linearly independent subset of $U$, continaing $S$, with the largest possible number of elements.
+Such a set exists as (i) a linearly independent subset of $U$ containing $S$ exists ($S$ itself), and (ii) the sizes of linearly independent sets in $\RR^n$ are bounded, by~Corollary~\ref{corollary:lin_ind_subset_Rn_small}. 
+
+We will prove that $B$ is a basis of $U$.
+Since $B$ is linearly independent, by construction, we need only show that $B$ spans $U$.
+Since $B\subset U$ and $U$ is a subspace of $\RR^n$, $\langle B\rangle\subseteq U$, by ??.
+To prove the reverse inclusion, let $u\in U$. If $u\notin\langle B\rangle$, when $B\cup \{u\}$ would be a linearly independent subset of $U$ containing $B$, by Theorem ??, contradicting the maximality of $B$. Therefore, we must have $u\in \langle B\rangle$. Since $u\in U$ was arbitrary, we conclude that $U\subset \langle B\rangle$. Thus, $B$ spans $U$, as was to be shown.
+\end{proof}
+
+\begin{corollary}
+Every nonzero subspace of $\RR^n$ has a basis.
+\end{corollary}
+\begin{proof}
+Apply Theorem~\ref{theorem:basis_containing_S} with $S=\emptyset$.
+\end{proof}
+
+\begin{theorem}
+Let $B_1$ and $B_2$ be bases of the subspace $U$ of $\RR^n$. Then $|B_1|=|B_2|$.
+\end{theorem}
+
+\begin{definition}
+Let $U$ be a subspace of $\RR^n$. The \emph{dimension of $U$}, written $\dim U$, is the size of any basis of $U$.
+\end{definition}
+
+\begin{theorem}
+Let $U$ and $V$ be subspaces of $\RR^n$ with $U\subseteq V$. Then $\dim U\leq \dim V$, with equality holding if and only if $U=V$.
+\end{theorem}
 \end{document}

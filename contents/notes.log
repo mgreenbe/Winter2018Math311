@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2016.1.27)  3 JAN 2018 10:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2016.1.27)  4 JAN 2018 11:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -105,13 +105,15 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 \thm@headsep=\skip50
 \dth@everypar=\toks24
 )
+(c:/texlive/2015/texmf-dist/tex/latex/preprint/fullpage.sty
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip51
+)
+(c:/texlive/2015/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+)
 \c@theorem=\count99
-
-
-LaTeX Warning: Unused global option(s):
-    [fullpage].
-
-(./notes.aux)
+ (./notes.aux)
 \openout1 = `notes.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
@@ -127,7 +129,8 @@ LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Try loading font information for U+msa on input line 19.
- (c:/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+(c:/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 19.
@@ -136,32 +139,32 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 19.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{c:/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
  [5] [6] [7] [8] [9]
-[10] [11] (./notes.aux) ) 
+[10] [11] [12] [13] (./notes.aux) ) 
 Here is how much of TeX's memory you used:
- 1425 strings out of 493054
- 16006 string characters out of 6138321
- 78180 words of memory out of 5000000
- 4830 multiletter control sequences out of 15000+600000
+ 1665 strings out of 493054
+ 18777 string characters out of 6138321
+ 81211 words of memory out of 5000000
+ 5063 multiletter control sequences out of 15000+600000
  9394 words of font info for 37 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 34i,14n,31p,244b,247s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2015/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmcs
-c10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
-c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texliv
-e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2015/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2015/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr5.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr7.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c
-:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive
-/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/201
-5/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on notes.pdf (11 pages, 183633 bytes).
+ 34i,14n,31p,388b,277s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2015/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmcsc10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ex10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+<c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texliv
+e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2015/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2015/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2015/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr7.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sy7.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><
+c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on notes.pdf (13 pages, 196203 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+ 103 PDF objects out of 1000 (max. 8388607)
+ 73 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

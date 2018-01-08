@@ -1,0 +1,345 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{fullpage, amsmath, amsthm,amssymb}
+
+\newcommand{\RR}{\mathbb{R}} \DeclareMathOperator{\rref}{rref}
+\DeclareMathOperator{\nullity}{nullity} \DeclareMathOperator{\rank}{rank}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{thdf}{Theorem-Definition}[section]
+\newtheorem{corollary}[theorem]{Corollary} \newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition} \newtheorem{definition}[theorem]{Definition}
+\newtheorem{provdef}[theorem]{Provisional definition}
+\newtheorem{definitions}[theorem]{Definitions}
+\newtheorem{remark}[theorem]{Remark} \newtheorem{remarks}[theorem]{Remarks}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exdef}[theorem]{Example-Definition}
+\newtheorem{exercise}[theorem]{Exercise} \newtheorem{keyfact}[theorem]{Key
+fact} 
+
+\newcommand{\ba}{\mathbf{a}} \newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}} \newcommand{\bi}{\mathbf{i}}
+\newcommand{\bu}{\mathbf{u}} \newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}} \newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}} \newcommand{\bz}{\mathbf{z}}
+\newcommand{\bzero}{\mathbf{0}}
+
+\newcommand{\bas}{\ba_1,\ldots,\ba_n}
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\Rmn}{\RR^{m\times n}} \newcommand{\Rmm}{\RR^{m\times m}}
+\newcommand{\Rnn}{\RR^{n\times n}}
+
+\newcommand{\setstuff}{\setlength{\parskip}{0.5em}\setlength{\parindent}{0em}\setlength{\itemsep}{0.5em}}
+
+\begin{document}
+\setstuff
+
+\section{The equation $A\bx=\bv$}
+
+Let $A\in\RR^{m\times n}$.
+To describe the nature of the solution set of the equation $A\bx=\bv$, for $\bv\in\RR^m$, is governed by two sets:
+
+\begin{definition}\label{df:col_space}\hfill
+  \begin{enumerate}\setstuff
+   \item The set
+    \[ C(A) := \{A\bx :	\bx\in\RR^n\} \]
+    is called the \emph{column space of $A$}.
+    \item The set
+    \[ N(A) = \{\bx\in\RR^n : A\bx=\bzero\} \]
+      is called the \emph{nullspace of $A$}
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}\label{rk:zero_in_nullspace}
+  As $A\bzero=\bzero$, we have $\bzero\in N(A)$ for any matrix $A$.
+\end{remark}
+
+The set $C(A)$ governs the solubility of $A\bx=\bv$, while $N(A)$ determines the size of the corresponding set. More precisely:
+
+\begin{theorem}\hfill
+  \begin{enumerate}\setstuff
+    \item The column space $C(A)$ consists of vectors $\bv\in\RR^m$ such that $A\bx=\bv$ has \emph{at least one} solution.
+    \item $A\bx=\bv$ has a solution for all $\bv\in\RR^m$ if and only if $C(A)=\RR^m$.
+    \item Let $\bv\in C(A)$, so that $A\bx=\bv$ has at least one solution, $\bx_0$, say. Then
+      \begin{equation*}
+        \{\bx : A\bx=\bv\} = \{\bx_0 + \by : \by\in N(A)\}.\tag{$*$}
+  \end{equation*}
+\item Let $\bv\in C(A)$. Then $A\bx=\bv$ has a unique solution if and only if $N(A)=\{\bzero\}$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}\hfill
+  \begin{enumerate}\setstuff
+  \item Statement (1) follows, essentially, from the definition of $C(A)$.
+    If $\bv\in C(A)$, then $\bv=A\bx$ for some $\bx\in\RR^n$, so $\bx$ is a solution of $A\bx=\bv$.
+    Conversely, if $\bv\notin C(A)$, then there is no vector $\bx\in\RR^m$ such that $A\bx=\bv$ i.e., $A\bx=\bv$ has no solution.
+
+  \item follows directly from (1).
+
+  \item Let $\bv\in C(A)$. We must prove~($*$). Let $\bx\in \{\bx : A\bx=\bv\}$. Then
+    \[
+      A(\bx-\bx_0) = A\bx - A\bx_0 = \bv - \bv = \bzero.
+    \]
+    Thus, $y := \bx-\bx_0\in N(A)$ and $\bx = \bx_0 + \by$.
+    Therefore, $\bx\in \{\bx_0 + \by : \by\in N(A)\}$.
+    Since $\bx\in \{\bx : A\bx=\bv\}$ was arbitrary,
+    \[
+      \{\bx : A\bx=\bv\}\subseteq\{\bx_0 + \by : \by\in N(A)\}.
+    \]
+
+    Conversely, suppose $\bx\in \{\bx_0 + \by : \by\in N(A)\}$, i.e., $\bx = \bx_0 + \by$, for some $\by\in N(A)$.
+    Now $A\bx_0=\bzero$ by hypothesis and $A\by=\bzero$ by definition of $N(A)$.
+    Therefore,
+    \[
+      A\bx = A(\bx_0 + y) = A\bx_0 + A\by = \bzero + \bzero = \bzero.
+    \]
+    Thus, $\bx\in N(A)$.
+    Since $\bx\in \{\bx_0 + \by : \by\in N(A)\}$ was arbitrary,
+    \[
+      \{\bx_0 + \by : \by\in N(A)\}\subseteq \{\bx : A\bx=\bv\}.
+    \]
+    Identity~($*$) follows.
+
+    \item Let $\bv\in C(A)$ and let $\bx_0\in\RR^n$ be some solution of $A\bx=\bv$.
+    By (3), the set of all solutions of $A\bx=\bv$ is
+    \[
+      \{\bx_0+\by : \by\in N(A)\}.
+    \]
+    If $N(A)=\{\bzero\}$, then
+    \[
+      \{\bx_0+\by : \by\in N(A)\} = \{\bx_0+\bzero\}=\{\bx_0\},
+    \]
+    in which case $\bx_0$ is the unique solution of $A\bx=\bv$.
+
+    If, conversely, $N(A)\neq \{\bzero\}$, then $N(A)$ must contain a nonzero vector, $y$. ($N(A)$ cannot be empty by Remark~\ref{rk:zero_in_nullspace}.)
+    Set $\bx_1:=\bx_0 + \by$.
+    Then $\bx_1\neq \bx_0$ as $\by\neq \bzero$ and $A\bx_1=\bzero$ as $\by\in N(A)$.
+    Thus, $A\bx=\bv$ has at least two solutions.\qedhere
+\end{enumerate}
+\end{proof}
+
+To compute the sets $C(A)$ and $N(A)$, we use the \emph{reduced row echelon form} of $A$.
+
+\section{Reduced row echelon form}
+
+
+\begin{definition}\label{df:rref}
+  A matrix $R$ is in \emph{reduced row echelon form} if:
+  \begin{enumerate}
+    \item All zero rows of $R$ are at the bottom.
+    \item Every nonzero row has a leading one.
+    \item A	leading one is the right of those in the rows above it.
+    \item A leading one is the only nonzero entry in its column.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}\label{df:row_equiv}
+  Let $A, B\in \RR^{m\times n}$.
+  We say that \emph{$A$ and $B$ are row equivalent} or that \emph{$A$ is row equivalent to $B$} if there is an \emph{invertible} matrix $\gamma\in\RR^{m\times m}$ such that $\gamma A=B$.
+\end{definition}
+
+\begin{remarks}\hfill \begin{enumerate}
+  \item Since $\gamma A=B$ if and only if
+	$\gamma^{-1} B=A$, the notion of row equivalence is symmetric in $A$ and $B$: $A$ is row equivalent to $B$ if and only if $B$ is row equivalent to $A$.
+
+  \item $A$ and $B$ are row equivalent if and only if $A$ can
+	be transformed into $B$ via a sequence of elementary row operations.
+	The theory of elementary matrices connects this formulation of row
+	equivalence with that of Definition~\ref{df:row_equiv}.
+	\end{enumerate}
+\end{remarks}
+
+\begin{theorem}\label{th:rref_existence_uniqueness}
+  A matrix $A$ is row equivalent to a unique matrix in reduced row echelon form.
+\end{theorem}
+
+\section{Linear combinations, span, and the column space}
+Let
+\[
+  A = \mat{\ba_1&\cdots&\cdots \ba_n}\in\RR^{m\times n}.
+\]
+The theory of the equation $A\bx=\bv$ --- an algebraic theory, so far --- can be understood in terms of the geometry of the column vectors $\bas$ of $A$ and the vector $\bv$.
+This geometric perspective is well worth developing:
+It lets us to apply algebraic methods to geometry.
+Even more valuable, perhaps, it gives us a framework for thinking geometrically (visually) about algebra. 
+There is no free lunch, however:
+In developing a geometric point of view on linear algebra, we incur some overhead, mainly in the form of new terminology.
+
+\begin{definition}\label{df:lc}
+  A \emph{linear combination of the vectors $\bas$} is an expression of the form
+  \[ x_1\ba_1+\cdots +x_n\ba_n, \]
+  where $t_j\in \RR$.
+\end{definition}
+
+\begin{exdef}\label{exdef:trivial_lc}
+  The zero vector can be expressed as a	linear comination of any sequence of vectors $\bas$:
+  \[ \bzero = 0\ba_1+ \cdots + 0\ba_n.  \]
+  The expression on the right hand side is called the \emph{trivial linear combination} of $\bas$.
+\end{exdef}
+
+\begin{exdef}\label{exdef:standard_basis}
+  Let $\bi_j\in\RR^m$ be the $j$-th column of the identity matrix $I\in\RR^{m\times m}$:
+  \[
+    \bi_j := \mat{0\\\vdots\\0\\1\\0\\\vdots\\0} \leftarrow \text{$j$-th row}.
+  \]
+  It's called the \emph{$j$-th standard basis vector of $\RR^m$}.
+Any vector $\bv\in\RR^m$ can be expressed as a linear combination of these:
+\[
+  \begin{array}{rcrcrcccr}
+    \mat{v_1\\v_2\\\vdots\\v_m} &=&
+\mat{v_1\\0\\\vdots\\0} 
+&+& \mat{0\\v_2\\\vdots\\0}
+&+& \cdots
+&+& \mat{0\\0\\\vdots\\v_m} \\
+&=& v_1\mat{1\\0\\\vdots\\0} 
+&+& v_2\mat{0\\1\\\vdots\\0}
+&+& \cdots
+&+& v_m\mat{0\\0\\\vdots\\1} \\
+&=& v_1\bi_1 &+& v_2\bi_2 &+&  \cdots  &+& v_m\bi_m
+  \end{array}
+\]
+\end{exdef}
+
+Here's a trivial, yet crucial, observation: By the definition of matrix multiplication,
+\[ x_1\ba_1+\cdots + x_n\ba_n = A\bx. \]
+We record (a paraphrase of) this simple fact, prominently, for ease of reference.
+
+\begin{keyfact}\label{kf:lc_matvec}
+  Linear combinations are just matrix-vector products.
+\end{keyfact}
+
+\begin{definitions}\label{df:span}
+  The \emph{span} of the vectors $\bas$, written $\langle \bas\rangle$, is the set of their linear combinations:
+  \[ 
+    \langle \bas \rangle := \{x_1\ba_1+\cdots + x_n\ba_n
+    : x_1,\ldots,x_n\in\RR\}.
+  \]
+\end{definitions}
+
+\begin{example}
+  Let $\bi_1,\ldots,\bi_m$ be the standard basis of $\RR^m$, as in Example-Definition~\ref{exdef:standard_basis}. As every vector $\bv\in\RR^m$ can be expressed as a linear comnination of $\bi_1,\ldots,\bi_m$, we have
+  \[
+    \langle \bi_1,\ldots,\bi_m\rangle = \RR^m.
+  \]
+\end{example}
+
+\begin{example}
+  By Key fact~\ref{kf:lc_matvec} and Definition~\ref{df:col_space}, we have:
+  \begin{equation}\label{eq:col_space_is_span}
+    C(A) = \langle \bas \rangle.
+  \end{equation}
+\end{example}
+
+\begin{theorem}\label{th:leading_ones} Let $A$ be its matrix and let $R=\rref
+	A$.  \begin{enumerate} \item The equation $A\bx=\bv$ has a solution for
+		all vectors $\bv$ if and only if every row of $R$ has a leading
+		one.  \item The equation $A\bx=\bzero$ has only the trivial
+		solution, $\bx=\bzero$, if and only if every column of $R$ has
+		a leading one.
+
+	\end{enumerate} \end{theorem}
+
+Theorem~\ref{th:leading_ones} suggests taking a closer look at the following
+two sets of vectors associated to a matrix $A\in\RR^{m\times n}$:
+\begin{definitions}\hfill \begin{enumerate} \item The set of all vectors
+	$\bv\in\RR^m$ such $A\bx=\bv$ has a solution is called the \emph{column
+	space of $A$} and written $C(A)$: \[ C(A) = \{A\bx : \bx\in \RR^n\}.
+\]
+
+
+		\item The set of all vectors $\bx\in\RR^n$ such that
+		$A\bx=\bzero$ is called the \emph{nullspace of $A$} and written
+	$N(A)$: \[ N(A) = \{\bx\in\RR^n : A\bx=\bzero\}.  \] \end{definitions}
+
+\begin{corollary} Let $A\in\RR^{m\times n}$.  \begin{enumerate} \item If
+	$A\bx=\bv$ has a solution for all $\bv\in\RR^m$, i.e., if
+	$$C(A)=\RR^m,$$ then $m\leq n$.  \item If $A\bx=\bzero$ has only the
+	trivial solution, i.e., if $$N(A)=\{\bzero\},$$ then $n\leq m$.
+	\end{enumerate} \end{corollary}
+
+\begin{corollary} The following are equivalent for a square matrix
+	$A\in\RR^{m\times m}$.  \begin{enumerate} \item $A\bx=\bv$ has a
+		solution for all vectors $\bv$.  \item $C(A)=\RR^m$ \item
+		$A\bx=\bzero$ has only the trivial solution.  \item
+		$N(A)=\{\bzero\}$ \item $\rref A = I$ \item $A$ is invertible.
+\end{enumerate} \end{corollary}
+
+Later, we'll give an intrinsic definition of the following essential notion:
+\begin{provdef} A \emph{subspace of $\RR^m$} is a subset of the form $C(A)$,
+where $A\in\RR^{m\times n}$, or $N(B)$, where $B\in\RR^{\ell\times m}$.
+\end{provdef}
+
+Row equivalence
+
+Uniqueness of rref
+
+Pivot columns
+
+% ******************************************************************************
+% %
+% ******************************************************************************
+% %
+
+\section{Linear combinations}
+
+\begin{definition}\label{df:lc_span} A \emph{linear combination} of vectors
+$\bas$ is an expression of the form \[ x_1\ba_1+\cdots +x_n\ba_n, \] where
+$t_j\in \RR$.  \end{definition}
+
+\begin{exdef}\label{exdef:trivial_lc} The zero vector can be written as a
+	linear comination of any sequence of vectors $\bas$: \[ \bzero = 0\ba_1
+	+ \cdots + 0\ba_n.  \] The expression on the right hand side is called
+	the \emph{trivial linear combination} of $\bas$.  \end{exdef}
+
+Here's a trivial, yet crucial, observation. Let \[
+A=\mat{\ba_1&\cdots&\ba_n}\in\RR^{m\times n}, \quad \bx=\mat{x_1\\\vdots\\x_m}.
+\] Then, by the definition of matrix multiplication, \[ x_1\ba_1+\cdots +
+x_n\ba_n = A\bx.  \] We record (a paraphrase of) this simple fact, prominently,
+for ease of reference.
+
+\begin{keyfact}\label{kf:lc_matvec} Linear combinations are just matrix-vector
+products.  \end{keyfact}
+
+% ******************************************************************************
+% %
+% ******************************************************************************
+% %
+
+\section{Span}
+
+\begin{definitions} The \emph{span} of a sequence $\bas$ of vectors in $\RR^m$,
+	written $\langle \bas\rangle$, is the set of all linear combinations of
+	these vectors:
+	
+	\[ \langle \bas \rangle := \{x_1\ba_1+\cdots + x_n\ba_n
+		: x_1,\ldots,x_n\in\RR\}.  \] We say $\bas$ \emph{span $\RR^m$}
+		if every vector $\bv\in\RR^m$ can be written as such a linear
+		combination, i.e., if \[ \langle \ba_1,\ldots,\ba_n\rangle =
+			\RR^m.  \] If \[
+			A=\mat{\ba_1&\ldots&\ba_n}\in\RR^{m\times n}, \] we
+		abbreviate to $\langle \ba_1,\ldots,\ba_n\rangle$ to $C(A)$,
+	and refer to this set as the \emph{column space} of $A$: \[ C(A) :=
+\langle \ba_1,\ldots,\ba_n\rangle.  \] \end{definitions}
+
+Note that, by Key Fact~\ref{kf:lc_matvec}, \[ C(A) = \{A\bx : \bx\in\RR^n\}.
+\] \begin{theorem} The following are equivalent for a matrix $A\in\RR^{m\times
+n}$.  \begin{enumerate} \item $C(A) = \RR^m$ \item The equation $A\bx=\bv$ has
+	a solution for all $\bv$.  \item $\rref A$ has a leading one in every
+	row.  \end{enumerate} Moreover, if any (hence, all) of these conditions
+hold, then $m\leq n$.  \end{theorem}
+
+% ******************************************************************************
+% %
+% ******************************************************************************
+% %
+
+\section{Linear independence}
+
+\begin{definition} Vectors $\bas\in\RR^m$ are \emph{linearly independent} if
+the only linear combination of $\bas$ that equals $\bzero$ is the trivial one
+(see Example-Definition~\ref{exdef:trivial_lc}).  \end{definition}
+
+
+
+
+\end{document}

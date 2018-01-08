@@ -1,0 +1,374 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{amsmath, amsthm,amssymb}
+
+\newcommand{\RR}{\mathbb{R}}
+\DeclareMathOperator{\rref}{rref}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\rank}{rank}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{thdf}{Theorem-Definition}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bi}{\mathbf{i}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bzero}{\mathbf{0}}
+
+\newcommand{\bas}{\ba_1,\ldots,\ba_n}
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\Rmn}{\RR^{m\times n}}
+\newcommand{\Rmm}{\RR^{m\times m}}
+\newcommand{\Rnn}{\RR^{n\times n}}
+
+
+\begin{document}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+\setlength{\itemsep}{0.5em}
+
+\section{Linear combinations and spans}
+
+\begin{definition}\label{df:lc_span}
+	A \emph{linear combination} of vectors $\ba_1,\ldots,\ba_n\in\RR^m$ is a vector of the form 
+	\[
+		x_1\ba_1+\cdots +x_n\ba_n,
+	\]
+	where $t_j\in \RR$.
+
+	The set of all linear combinations of $\ba_1,\ldots,\ba_n$ is called the
+	\emph{span of $\ba_1,\ldots,\ba_n$} and written
+	$\langle \ba_1,\ldots,\ba_n\rangle$:
+	\[
+		\langle \ba_1,\ldots,\ba_n\rangle 
+		= \{x_1\ba_1+\cdots + x_n\ba_n : x_1,\ldots,x_n\in\RR\}.
+	\]
+
+	If $V$ is a set of vectors in $\RR^m$, we say that vectors $\ba_1,\ldots,\ba_n$
+	\emph{span U} if
+	\[
+		\langle \ba_1,\ldots,\ba_n\rangle = U.
+	\]
+\end{definition}
+\[
+	x_1\ba_1+\cdots + x_n\ba_n = A\bx,
+\]
+where
+\[
+	A=\mat{\ba_1&\cdots&\ba_n},\quad \bx=\mat{x_1\\\vdots\\x_m},
+\]
+we deduce:
+\begin{theorem}\label{th:lc-matvec}
+	Suppose $A=\mat{\ba_1&\cdots&\ba_n}$. Then the span of the column vector
+	of $A$ is the set of matrix-vector products $A\bx$ for $\bx\in\RR^n$:
+	\[
+		\langle \bas\rangle = \{A\bx : \bx\in\RR^n\}.
+	\]
+\end{theorem}
+
+
+
+
+\section{Bases and basis matrices of $\RR^m$}
+Let
+\begin{definition}
+	We say that vectors $\ba_1,\ldots,\ba_n\in\RR^m$ form a \emph{basis of $\RR^m$} if every vector 
+	$\bv\in \RR^m$ can be written uniquely as a linear combination of the columns of $A$, i.e.,
+	for every vector $\bv\in\RR^m$, there are unique scalars, $x_1,\ldots,x_n$,
+	\[
+		\bv=x_1\ba_1 + \cdots + x_n\bv_n.
+	\]
+
+	If the vectors $\ba_1,\ldots,\ba_n$ form a basis of $\RR^m$, we say that the matrix
+	\[
+		A:=\mat{\ba_1&\cdots&\ba_n}\in\RR^{m\times n}.
+	\]
+	is a \emph{basis matrix of $\RR^m$}.
+
+\end{definition}
+
+The following result follows from the fundamental correspondence between
+linear combinations and matrix-vector products (Theorem~\ref{th:lc-matvec}): 
+
+\begin{thdf}
+	$A$ is a basis matrix of $\RR^m$ if and only if, for every $\bv\in \RR^m$,
+	the equation
+	\begin{equation}\label{eq:axv}
+		A\bx=\bv
+	\end{equation}
+	has a unique solution. This solution is called the \emph{coordinate vector of $\bv$ with respect to $A$}
+	and is written $[\bv]_A$.
+\end{thdf}
+
+\begin{theorem}\label{th:invertible_mats_are_basis_mats}
+	Suppose $A\in\RR^{m\times m}$ is invertible.
+	Then $A$ is a basis matrix of $\RR^n$.
+\end{theorem}
+
+\begin{proof}
+	If $A$ is invertible, then $\bx:=A^{-1}\bv$ is the unique solution to $A\bx=\bv$.
+\end{proof}
+
+Below, we will show that every basis matrix of $\RR^m$ is (square and) invertible.
+
+\section{Linear independence}
+
+Let $\bas\in\RR^m$.
+The condition under which vectors $\bas$ form a basis of $\RR^m$ is the combination of two weaker subconditions:
+\begin{enumerate}
+	\item Every vector $\bv\in \RR^m$ can be written in \emph{at least one way} as a linear combination of the $\ba_j$.
+	\item Every vector $\bv\in \RR^m$ can be written in \emph{at most one way} as a linear combination of the $\ba_j$.
+\end{enumerate}
+We introduce some terminology, useful in exploring these subconditions.
+\begin{definition}\label{df:span}
+	The set of all linear combinations of $\ba_1,\ldots,\ba_n$ is called the
+	\emph{span of $\ba_1,\ldots,\ba_n$} and written
+	$\langle \ba_1,\ldots,\ba_n\rangle$:
+	\[
+		\langle \ba_1,\ldots,\ba_n\rangle 
+		= \{x_1\ba_1+\cdots + x_n\ba_n : x_1,\ldots,x_n\in\RR\}.
+	\]
+
+	If $V$ is a set of vectors in $\RR^m$, we say that vectors $\ba_1,\ldots,\ba_n$
+	\emph{span U} if
+	\[
+		\langle \ba_1,\ldots,\ba_n\rangle = U.
+	\]
+\end{definition}
+
+Condition (1), above, says that the vectors $\ba$ span $\RR^m$.
+
+\begin{definition}
+	The vectors $\bas$ are \emph{linearly independent} if the identity
+	\[
+		x_1\ba_1 + \cdots + x_n\ba_n = \bzero
+	\]
+	holds only when the scalars $x_j$ are all zero.
+\end{definition}
+
+\begin{theorem}
+	Condition (2) holds if and only if the vectors $\bas$ are linearly independent.
+\end{theorem}
+
+\begin{proof}
+	Suppose condition (2) holds.
+	We need to show that the $\bas_j$ are linearly independent.
+	To that end, consider the equation
+	\begin{equation*}
+		x_1\ba_1+\cdots + x_n\ba_n=\bzero.\tag{$*$}
+	\end{equation*}
+        It always has at least one solution, namely $x_j=0$, for all $j$.
+	By condition (2), the vector $\bzero$ can be written in at most one way as a linear
+	combination of the $\ba_j$. In other words, $(*)$ has at most one solution. 
+	Thus, ($*$) has exactly one solution: $x_j=0$, for all $j$.
+	Therefore, the $\ba_j$ are linearly independent.
+
+	Conversely, suppose the $\ba_j$ are linearly independent.
+	We need to show that condition (2) holds. 
+	To that end, let $\bv\in\RR^m$.
+	To prove that $\bv$ can be written in at most one way as a linear combination of the $\ba_j$,
+	suppose
+	\begin{equation*}
+		x_1\ba_1+\cdots + x_n\ba_n=\bv.\tag{$\dag$}
+	\end{equation*}
+	and
+	\begin{equation*}
+		y_1\ba_1+\cdots + y_n\ba_n=\bv.\tag{$\ddag$}
+	\end{equation*}
+	Subtracting (\ddag) from (\dag), we get
+	\begin{equation*}
+		(x_1-y_1)\ba_1+\cdots + (x_n-y_n)\ba_n=\bzero.
+	\end{equation*}
+	As the $\ba_j$ are linearly indepenent, by hypothesis, we must have 
+	\[
+		x_j-y_j=0,\quad\text{for all $j$}.
+	\]
+	Thus, $x_j=y_j$ for all $j$, and the two ostensibly different expressions (\dag) and (\ddag)
+	for $\bv$ as linear combinations of the $\ba_j$ are, in fact, the same.
+	Condition (2) follows.
+
+	\begin{corollary}
+	$A$ is a basis matrix of $\RR^m$ if and only if its columns vectors are linearly independent and they span $\RR^m$.
+	\end{corollary}
+\end{proof}
+
+\section{Reduced row echelon form}
+
+In the next few sections, we will prove some important results concerning the numerology of systems of linear equations.
+They imply, in particular, that basis matrices are \emph{square}.
+The main tool in the proofs of these results is the following (hopefully) familiar notion:
+
+\begin{definition}
+	A matrix $R$ is in \emph{reduced row echelon form} if:
+	\begin{enumerate}
+		\item All zero rows of $R$ are at the bottom.
+		\item Every nonzero row has a leading one.
+		\item A leading one is the right of those in the rows above it.
+		\item A leading one is the only nonzero entry in its column.
+	\end{enumerate}
+\end{definition}
+
+The next theorem paraphrases the fact that a matrix can be brought to reduced row echelon form via a sequence of 
+elementary row operations, and that these operations can be effected by matrix multiplication.
+\begin{theorem}
+	Let $A\in\RR^{m\times n}$. Then there is an invertible matrix $\gamma\in\RR^{m\times m}$
+	such that $\gamma A$ is in reduced row echelon form.
+\end{theorem}
+
+\begin{theorem}
+	Let $A$ be its matrix and let $R=\rref A$.
+	\begin{enumerate}
+		\item The equation $A\bx=\bzero$ has only the trivial solution, $\bx=\bzero$, if and only if every column
+			of $R$ has a leading one.
+		\item The equation $A\bx=\bv$ has a solution for all $\bv$ if and only if every row of $R$ has a leading one.
+
+	\end{enumerate}
+\end{theorem}
+
+\section{Linear independent sets are small}
+
+\begin{theorem}\label{theorem:row_equiv_to_rref}
+	Let $A\in\RR^{m\times n}$.
+	Suppose $m<n$.
+	Then there is a \emph{nonzero} vector $\bx\in\RR^n$ such that the equation $A\bx=\bzero$.
+\end{theorem}
+
+\begin{proof}
+	Invoking Theorem~\ref{theorem:row_equiv_to_rref}, let $\gamma\in\RR^{m\times m}$ be an invertible matrix such that
+	$R := \gamma A$ is in reduced row echelon form.
+	Since $R$ has $m$ rows, at most $m$ of its $n$ columns can contain leading ones.
+	Since $m < n$, by hypothesis, at least one column of $R$ does not contain a leading one;
+	suppose the leftmost such column is the $j$-th.
+	Then
+	\[
+		R = \begin{bmatrix}
+			1 & 0 & \cdots & 0 & r_{1,j} & * & * & \cdots & *\\
+			0 & 1 & \cdots & 0 & r_{2,j} & * & * & \cdots & *\\
+			\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+			0 & 0 & \cdots & 1 & r_{j-1, j} & * & * & \cdots & *\\
+			0 & 0 & \cdots & 0 & 0 & * & * & \cdots & *\\
+                        \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+			0 & 0 & \cdots & 0 & 0 & * & * & \cdots & *\\
+		\end{bmatrix}.
+	\]
+
+	Let
+	\[
+		\bx_1 := \begin{bmatrix}-r_{1,j}\\-r_{2,j}\\\vdots\\-r_{j-1,j}\\1 \\ 0 \\  \vdots \\ 0\end{bmatrix}\neq \bzero.
+	\]
+	You can verify (exercise!) that $R\bx=\bzero$.
+	Multiplying both sides of this identity by $\gamma^{-1}$, we get
+	\[
+		A\bx = \gamma^{-1}R \bx = \gamma^{-1}\bzero = \bzero.
+	\]
+	Thus, $\bx_j$ is a nonzero solution of $A\bx=\bzero$.
+\end{proof}
+
+\begin{remark}
+	The solution $\bx_1$ arises from setting $t_1=1$, $t_j= 0$ for $j\neq 1$, in the parametric solution of $A\bx=\bzero$.
+\end{remark}
+
+\begin{corollary}\label{corollary:lin_ind_sets_are_small}
+	Let $A\in\Rmn$.
+	If the column vectors of $A$ are linearly independent, then $n \leq m$.
+\end{corollary}
+
+\begin{proof}
+	The statement of the preceding theorem is equivalent to the statement that if $A\bx=\bv$ has a solution for all
+	$\bv\in\RR^m$, then $m\leq n$.
+	Saying that $A\bx=\bv$ has a solution for all $\bv$ is	another way of saying that the column vectors of $A$ span 
+	$\RR^m$.
+\end{proof}
+
+
+\section{Spanning sets are big}
+
+\begin{theorem}
+	Let $A\in\Rmn$.
+	Suppose $n < m$.
+	Then there is a vector $\bv\in\RR^m$ such that the equation $A\bx=\bv$ has no solution.
+\end{theorem}
+
+\begin{proof}
+	Invoking Theorem~\ref{theorem:row_equiv_to_rref}, let $\gamma\in\RR^{m\times m}$ be an invertible matrix such that
+	$R := \gamma A$ is in reduced row echelon form.
+	Since $R$ has $n$ columns and each column contains at most a single leading one,
+	at most $n$ of its rows $m$ can contain leading ones.
+	As $n<m$, by hypothesis, at least one row of $R$ does not contain a leading one and, as $R$ is in reduced
+	row echelon form, must therefore be a zero row.
+
+	Since $R$ is in reduced row echelon form and has a zero row, its bottom row must be a zero row. Therefore,
+	\[
+		R\bx=\begin{bmatrix}* \\ * \\\vdots\\ * \\0\end{bmatrix},
+	\]
+	for all $\bx\in \RR^n$.
+	It follows that the equation $R\bx=\bi_m$ has no solution.
+	Set
+	\[
+		\bv:=\gamma^{-1}\bi_m.
+	\]
+	As $\gamma$ is invertible and $\gamma A=R$, the equations
+	\[
+		A\bx=\bv
+                \quad\text{and}\quad\quad 
+		R\bx=\bi_m
+	\]
+	have the same solution set. Since $R\bx=\bi_m$ has no solution, neither does $A\bx=\bv$.
+\end{proof}
+
+\begin{corollary}\label{corollary:spanning_sets_are_big}
+	Let $A\in\Rmn$.
+	If the column vectors of $A$ span $\RR^m$, then $m \leq n$.
+\end{corollary}
+\begin{proof}
+	The statement of the preceding theorem is equivalent to the statement that if $A\bx=\bv$ has a solution for all
+	$\bv\in\RR^m$, then $m\leq n$.
+	Saying that $A\bx-=\bv$ has a solution for all $\bv$ is	another way of saying that the column vectors of $A$ span 
+	$\RR^m$.
+\end{proof}
+
+\section{Basis matrices are square}
+
+\begin{theorem}
+	Let $A\in\RR^{m\times n}$ be a basis matrix of $\RR^m$. Then $m=n$.
+\end{theorem}
+\begin{proof}
+	Combine Corollaries~\ref{corollary:lin_ind_sets_are_small} and~\ref{corollary:spanning_sets_are_big}.
+\end{proof}
+
+\section{Big linearly independent sets span}
+
+\begin{theorem}
+Suppose $A\in\RR^{m\times n}$ has linearly independent columns. Then
+\[
+	\rref A = \mat{I_n\\\bzero}.
+\]
+
+\begin{theorem}
+	Suppose $R$ is a matrix in rref. Then $R$ has a column with no leading one in it if and only if $R\bx = \bzero$ has a nontrivial solution.
+
+	Suppose $R$ is a matrix in rref. Then $R$ has a zero row if and only if there is a $\bv$ such that $A\bx=\bv$ has no solution.
+\end{theorem}
+
+\end{theorem}
+
+\section{Small spanning sets are linearly independent}
+
+\section{Basis matrices are invertible}
+In this section, we prove that the $A$ being a basis matrix is equivalent to $A$ being invertible.
+This is plausible, thanks to Theorem~\ref{theorem:basis_mats_are_square}.
+\end{document}

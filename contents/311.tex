@@ -1,8 +1,10 @@
 \documentclass[12pt]{amsart}
 
-\usepackage{fullpage, amsmath, amsthm,amssymb}
+\usepackage{fullpage, amsmath, amsthm, amssymb, verbatim, graphicx}
 
-\newcommand{\RR}{\mathbb{R}} \DeclareMathOperator{\rref}{rref}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\DeclareMathOperator{\rref}{rref}
 \DeclareMathOperator{\nullity}{nullity} \DeclareMathOperator{\rank}{rank}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -17,11 +19,18 @@
 \newtheorem{exercise}[theorem]{Exercise} \newtheorem{keyfact}[theorem]{Key
 fact} 
 
-\newcommand{\ba}{\mathbf{a}} \newcommand{\bb}{\mathbf{b}}
-\newcommand{\bc}{\mathbf{c}} \newcommand{\bi}{\mathbf{i}}
-\newcommand{\bu}{\mathbf{u}} \newcommand{\bv}{\mathbf{v}}
-\newcommand{\bw}{\mathbf{w}} \newcommand{\bx}{\mathbf{x}}
-\newcommand{\by}{\mathbf{y}} \newcommand{\bz}{\mathbf{z}}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bi}{\mathbf{i}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
 \newcommand{\bzero}{\mathbf{0}}
 
 \newcommand{\bas}{\ba_1,\ldots,\ba_n}
@@ -30,135 +39,420 @@ fact}
 \newcommand{\Rnn}{\RR^{n\times n}}
 
 \newcommand{\setstuff}{\setlength{\parskip}{0.5em}\setlength{\parindent}{0em}\setlength{\itemsep}{0.5em}}
+\DeclareMathOperator{\Span}{span}
 
 \begin{document}
 \setstuff
 
-\section{The equation $A\bx=\bv$}
+\includegraphics[scale=1.5]{lincombs.pdf}
+
+\section{The equation $A\bx=\bb$}
 
 Let $A\in\RR^{m\times n}$.
-To describe the nature of the solution set of the equation $A\bx=\bv$, for $\bv\in\RR^m$, is governed by two sets:
+The nature of the solution set of the equation $A\bx=\bb$, for $\bb\in\RR^m$, is governed by two sets:
 
 \begin{definition}\label{df:col_space}\hfill
   \begin{enumerate}\setstuff
-   \item The set
-    \[ C(A) := \{A\bx :	\bx\in\RR^n\} \]
-    is called the \emph{column space of $A$}.
     \item The set
     \[ N(A) = \{\bx\in\RR^n : A\bx=\bzero\} \]
-      is called the \emph{nullspace of $A$}
+      is called the \emph{nullspace of $A$}. It's the solution set of the homogeneous equation $A\bx=\bzero$.
+   \item The set
+     \[ C(A) := \{\bb\in\RR^m :	\bb=A\bx,\text{ for some }\bx\in\RR^n\} \]
+    is called the \emph{column space of $A$}. It's the set of vectors $\bb\in\RR^m$ for which the equation $A\bx=\bb$ has a solution.
   \end{enumerate}
 \end{definition}
 
-\begin{remark}\label{rk:zero_in_nullspace}
-  As $A\bzero=\bzero$, we have $\bzero\in N(A)$ for any matrix $A$.
-\end{remark}
+To determine $N(A)$ is to solve the equation $A\bx=\bzero$.
+\begin{example}\label{eg:nullspace}
+  Let
+  \[
+    A = \mat{1&4&7\\2&5&8\\3&6&9}.
+  \]
+  The nullspace of $A$ is the solution set of
+  \[
+    \mat{1&4&7\\2&5&8\\3&6&9}\mat{x_1\\x_2\\x_3}=\mat{0\\0\\0}:
+  \]
+  \[
+    N(A) =\left\{t\mat{1\\-2\\1} : t\in\RR\right\}.
+  \]
+\end{example}
 
-The set $C(A)$ governs the solubility of $A\bx=\bv$, while $N(A)$ determines the size of the corresponding set. More precisely:
-
-\begin{theorem}\hfill
-  \begin{enumerate}\setstuff
-    \item The column space $C(A)$ consists of vectors $\bv\in\RR^m$ such that $A\bx=\bv$ has \emph{at least one} solution.
-    \item $A\bx=\bv$ has a solution for all $\bv\in\RR^m$ if and only if $C(A)=\RR^m$.
-    \item Let $\bv\in C(A)$, so that $A\bx=\bv$ has at least one solution, $\bx_0$, say. Then
-      \begin{equation*}
-        \{\bx : A\bx=\bv\} = \{\bx_0 + \by : \by\in N(A)\}.\tag{$*$}
+\begin{example}\label{eg:nullspace}
+  Let
+  \[
+    A = \mat{1&2&3\\4&5&6\\7&8&9}.
+  \]
+  Setting
+  \[
+    \bb=\mat{b_1\\b_2\\b_3}\in\RR^3,
+  \]
+  and going through the motions of solving the system
+  \begin{equation*}
+    \mat{1&2&3\\4&5&6\\7&8&9}\mat{x_1\\x_2\\x_3}=\mat{b_1\\b_2\\b_3},
+    \tag{\maltese}
   \end{equation*}
-\item Let $\bv\in C(A)$. Then $A\bx=\bv$ has a unique solution if and only if $N(A)=\{\bzero\}$.
-  \end{enumerate}
+  we identify a condition under which $\bb$ belongs to $C(A)$.
+
+  Application of two elementary row operations (which ones?) transforms 
+  \[
+    \mat{A&\bb}=\mat{1&2&3&b_1\\4&5&6&b_2\\7&8&9&b_3},
+  \]
+  the augmented matrix of (\maltese), into
+  \[
+    \mat{1&2&3&b_1\\0&-3&-6&b_2-4b_1\\0&0&0&b_1-2b_2+b_3},
+  \]
+  It follows that $A\bx=\bb$ has a solution if and only if $b_1-2b_2+b_3 = 0$. Thus,
+  \[
+    C(A) = \left\{\mat{b_1\\b_2\\b_3} : b_1-2b_2+b_3=0\right\}.
+  \]
+  Note that this description makes it easy to test a vector $\bb$ for membership in $C(A)$ --- simply check whether $b_1-2b_2+b_3$ is $0$ or not.
+
+  Finally, notice that
+  \begin{align*}
+    C(A) %&= \left\{\mat{b_1\\b_2\\b_3} : b_1-2b_2+b_3=0\right\}\\
+         &= \left\{\mat{b_1\\b_2\\b_3} :
+         \mat{1&-2&1}\mat{b_1\\b_2\\b_3} = 0 \right\}\\
+               &= N\left(\mat{1&-2&1}\right).
+  \end{align*}
+  The column space of one matrix can be the nullspace of another! 
+\end{example}
+
+\begin{exercise}\label{ex:invertible_nullsapce_col_space}
+  Let $A\in\RR^{m\times m}$ be an invertible matrix. Prove that $N(A)=\{\bzero\}$ and that $C(A)=\RR^m$.
+%  The identity $N(A)=\{\bzero\}$ follows from the fact that $A\bx=\bzero$ if and only if $\bx=A^{-1}\bzero=\bzero$.
+%  Let $\bv\in\RR^m$. Then $A\bx=\bb$ has solution $\bx=A^{-1}\bb$, putting $\bb$ in $C(A)$. Since $\bv\in\RR^m$ was arbitrary, $C(A)=\RR^m$.
+\end{exercise}
+
+The set $C(A)$ governs the solubility of $A\bx=\bb$, while $N(A)$ determines the size of the corresponding set. More precisely:
+
+\begin{theorem}\label{th:particular_plus_general}
+  Let $\bb\in C(A)$, so that $A\bx=\bb$ has at least one solution, $\bx_0$, say. Then
+      \begin{equation*}
+        \{\bx : A\bx=\bb\} = \{\bx_0 + \by : \by\in N(A)\}.
+  \end{equation*}
 \end{theorem}
 
-\begin{proof}\hfill
-  \begin{enumerate}\setstuff
-  \item Statement (1) follows, essentially, from the definition of $C(A)$.
-    If $\bv\in C(A)$, then $\bv=A\bx$ for some $\bx\in\RR^n$, so $\bx$ is a solution of $A\bx=\bv$.
-    Conversely, if $\bv\notin C(A)$, then there is no vector $\bx\in\RR^m$ such that $A\bx=\bv$ i.e., $A\bx=\bv$ has no solution.
+\begin{proof}
+Let $\bb\in C(A)$.
+Let $\bx\in \{\bx : A\bx=\bb\}$.
+Then
+  \[
+    A(\bx-\bx_0) = A\bx - A\bx_0 = \bb - \bb = \bzero.
+  \]
+  Thus, $\by := \bx-\bx_0\in N(A)$ and $\bx = \bx_0 + \by$.
+  Therefore, $\bx\in \{\bx_0 + \by : \by\in N(A)\}$.
+  Since $\bx\in \{\bx : A\bx=\bb\}$ was arbitrary,
+  \[
+    \{\bx : A\bx=\bb\}\subseteq\{\bx_0 + \by : \by\in N(A)\}.
+  \]
 
-  \item follows directly from (1).
-
-  \item Let $\bv\in C(A)$. We must prove~($*$). Let $\bx\in \{\bx : A\bx=\bv\}$. Then
-    \[
-      A(\bx-\bx_0) = A\bx - A\bx_0 = \bv - \bv = \bzero.
-    \]
-    Thus, $y := \bx-\bx_0\in N(A)$ and $\bx = \bx_0 + \by$.
-    Therefore, $\bx\in \{\bx_0 + \by : \by\in N(A)\}$.
-    Since $\bx\in \{\bx : A\bx=\bv\}$ was arbitrary,
-    \[
-      \{\bx : A\bx=\bv\}\subseteq\{\bx_0 + \by : \by\in N(A)\}.
-    \]
-
-    Conversely, suppose $\bx\in \{\bx_0 + \by : \by\in N(A)\}$, i.e., $\bx = \bx_0 + \by$, for some $\by\in N(A)$.
-    Now $A\bx_0=\bzero$ by hypothesis and $A\by=\bzero$ by definition of $N(A)$.
-    Therefore,
-    \[
-      A\bx = A(\bx_0 + y) = A\bx_0 + A\by = \bzero + \bzero = \bzero.
-    \]
-    Thus, $\bx\in N(A)$.
-    Since $\bx\in \{\bx_0 + \by : \by\in N(A)\}$ was arbitrary,
-    \[
-      \{\bx_0 + \by : \by\in N(A)\}\subseteq \{\bx : A\bx=\bv\}.
-    \]
-    Identity~($*$) follows.
-
-    \item Let $\bv\in C(A)$ and let $\bx_0\in\RR^n$ be some solution of $A\bx=\bv$.
-    By (3), the set of all solutions of $A\bx=\bv$ is
-    \[
-      \{\bx_0+\by : \by\in N(A)\}.
-    \]
-    If $N(A)=\{\bzero\}$, then
-    \[
-      \{\bx_0+\by : \by\in N(A)\} = \{\bx_0+\bzero\}=\{\bx_0\},
-    \]
-    in which case $\bx_0$ is the unique solution of $A\bx=\bv$.
-
-    If, conversely, $N(A)\neq \{\bzero\}$, then $N(A)$ must contain a nonzero vector, $y$. ($N(A)$ cannot be empty by Remark~\ref{rk:zero_in_nullspace}.)
-    Set $\bx_1:=\bx_0 + \by$.
-    Then $\bx_1\neq \bx_0$ as $\by\neq \bzero$ and $A\bx_1=\bzero$ as $\by\in N(A)$.
-    Thus, $A\bx=\bv$ has at least two solutions.\qedhere
-\end{enumerate}
+  Conversely, suppose $\bx\in \{\bx_0 + \by : \by\in N(A)\}$, i.e., $\bx = \bx_0 + \by$, for some $\by\in N(A)$.
+  Now $A\bx_0=\bzero$ by hypothesis and $A\by=\bzero$ by definition of $N(A)$.
+  Therefore,
+  \[
+    A\bx = A(\bx_0 + y) = A\bx_0 + A\by = \bzero + \bzero = \bzero.
+  \]
+  Thus, $\bx\in N(A)$.
+  Since $\bx\in \{\bx_0 + \by : \by\in N(A)\}$ was arbitrary,
+  \[
+    \{\bx_0 + \by : \by\in N(A)\}\subseteq \{\bx : A\bx=\bb\}.
+  \]
+  Having proved the reverse containment above, equality holds. 
 \end{proof}
 
-To compute the sets $C(A)$ and $N(A)$, we use the \emph{reduced row echelon form} of $A$.
+\begin{example}
+  Let
+  \[
+    A = \mat{1&4&7\\2&5&8\\3&6&9}.
+  \]
+  Since
+  \[
+    \mat{1&4&7\\2&5&8\\3&6&9}\mat{1\\1\\0} = \mat{5\\7\\9} =: \bb
+  \]
+  and, by Example~\ref{eg:nullspace}, 
+  \[
+    N(A) =\left\{t\mat{1\\-2\\1} : t\in\RR\right\},
+  \]
+  Theorem~\ref{th:particular_plus_general} implies that
+  \[
+    \left\{\bx : A\bx=\bb\right\} =
+    \left\{\mat{1\\1\\0} + t\mat{1\\-2\\1}: t\in\RR\right\}.
+  \]
+\end{example}
 
-\section{Reduced row echelon form}
+\section{Subspaces}
 
-
-\begin{definition}\label{df:rref}
-  A matrix $R$ is in \emph{reduced row echelon form} if:
+\begin{definition}\label{df:subspace}
+  A subset $U$ of $\RR^m$ is a \emph{subspace of $\RR^m$} if:
   \begin{enumerate}
-    \item All zero rows of $R$ are at the bottom.
-    \item Every nonzero row has a leading one.
-    \item A	leading one is the right of those in the rows above it.
-    \item A leading one is the only nonzero entry in its column.
+    \item The zero vector of $\RR^m$ belongs to $U$:
+      \[
+        \bzero\in U.
+      \]
+    \item $U$ is \emph{closed under addition}:
+      \begin{center}
+        If $\bu_1\in U$ and $\bu_2\in U$ then $\bu_1+\bu_2\in U$.
+      \end{center}
+    \item $U$ is \emph{closed under scalar multiplication}:
+      \begin{center}
+        If $\bu\in U$ and $s\in \RR$ then $s\bu\in U$.
+      \end{center}
   \end{enumerate}
 \end{definition}
 
-\begin{definition}\label{df:row_equiv}
-  Let $A, B\in \RR^{m\times n}$.
-  We say that \emph{$A$ and $B$ are row equivalent} or that \emph{$A$ is row equivalent to $B$} if there is an \emph{invertible} matrix $\gamma\in\RR^{m\times m}$ such that $\gamma A=B$.
-\end{definition}
+\begin{remark}\hfill
+  \begin{itemize}
+\item When attempting to prove that a subset $U$ of $\RR^m$ satisfies property (2), you need to show that $\bu_1+\bu_2\in U$ for \emph{any} pair of elements $\bu_1, \bu_2$ of $U$.
+  Similarly, to prove that a subset $U$ of $\RR^m$ satisfies property (3), you need to show that $s\bu\in U$ for \emph{any} element $\bu_1$ of $U$ and \emph{any} real number $s$.
 
-\begin{remarks}\hfill \begin{enumerate}
-  \item Since $\gamma A=B$ if and only if
-	$\gamma^{-1} B=A$, the notion of row equivalence is symmetric in $A$ and $B$: $A$ is row equivalent to $B$ if and only if $B$ is row equivalent to $A$.
-
-  \item $A$ and $B$ are row equivalent if and only if $A$ can
-	be transformed into $B$ via a sequence of elementary row operations.
-	The theory of elementary matrices connects this formulation of row
-	equivalence with that of Definition~\ref{df:row_equiv}.
-	\end{enumerate}
+\item To show that a given subset $U$ of $\RR^m$ is \emph{not} a subspace of $\RR^m$, you need only show that \emph{one of} (1), (2), and (3) fail.
+  To show that (2) fails, you need only produce \emph{one} pair $\bu_1, bu_2$ of elements of $U$ such that $\bu_1+\bu_2\notin U$.
+  Similarly, to prove that (3) fails, you need only produce \emph{one} element $\bu$ of $U$ and \emph{one} real number $s$ such that $s\bu \notin U$.
+  \end{itemize}
 \end{remarks}
 
-\begin{theorem}\label{th:rref_existence_uniqueness}
-  A matrix $A$ is row equivalent to a unique matrix in reduced row echelon form.
+\begin{example}\label{eg:nullspace_in_disguise}
+  Let
+  \[
+    U = \left\{\mat{x\\y}\in\RR^2 : x+y=0\right\}.
+  \]
+  Then $U$ is a subspace of $\RR^2$. We prove this by verifying that $U$ satisfies properties (1), (2), and (3) of Definition~\ref{df:subspace}:
+  \begin{enumerate}
+    \item Since $0+0=0$,
+    \[
+      \bzero=\mat{0\\0}\in U,
+    \]
+    by defintion of $U$.
+
+  \item Let
+    \[
+      \mat{x_1\\y_2},\mat{x_2\\y_2}\in U.
+    \]
+    Then, by definition of $U$,
+    \[
+      x_1+y_1=0\quad\text{and}\quad x_2+y_2=0.
+    \]
+    Therefore,
+    \[
+      (x_1+x_2) + (y_1+y_2) = (x_1+y_1) + (x_2+y_2)=0.
+    \]
+    Thus,
+    \[
+      \mat{x_1\\y_1} + \mat{x_2\\y_2} =
+      \mat{x_1+x_2\\y_1+y_2}\in U,
+    \]
+    by definition of $U$.
+    
+  \item Let
+    \[
+      \mat{x\\y}\in U,\quad s\in \RR.
+    \]
+    Then, by defintion of $U$, we have 
+    \[
+      x+y=0.
+    \]
+    Therefore,
+    \[
+      sx+xy = s(x+y) =s(0) = 0.
+    \]
+    Thus,
+    \[
+      s\mat{x\\y} = \mat{sx\\sy}\in U.
+    \]
+ \end{enumerate}
+\end{example}
+
+\begin{example}
+  Let
+  \[
+    U = \left\{\mat{x\\y}\in\RR^2 : x^2 + y^2 = 1\right\}.
+  \]
+  Then $U$ is not a subspace of $\RR^2$ as $\bzero\notin U$:
+  \[
+    0^2 + 0^2 = 0 \neq 1.
+  \]
+\end{example}
+
+\begin{example}
+  Let
+  \[
+    U = \left\{\mat{x\\y}\in\RR^2 : x^2 = y^2\right\}.
+  \]
+  Then $U$ is not a subspace of $\RR^2$ since it fails property (2) of Definition~\ref{df:subspace}:
+  \begin{center}
+    $\mat{1\\1}, \mat{1\\-1}\in U$,
+    but $\mat{1\\0}=\mat{1\\1} + \mat{1\\-1}\notin U$.
+  \end{center}
+\end{example}
+
+\begin{example}
+  Let $\ZZ$, the set of integers, viewed as a subset of in $\RR=\RR^1$.
+  Then $\ZZ$ is not a subspace of $\RR^1$ as $1\in \ZZ$ but
+  \[
+    \tfrac12\cdot 1 = \tfrac12\notin \ZZ.
+  \]
+\end{example}
+
+\begin{theorem}\label{th:nullspace_is_subspace}
+  Let $A\in\RR^{m\times n}$. Then $N(A)$ is a subspace of $\RR^n$.
 \end{theorem}
 
-\section{Linear combinations, span, and the column space}
+\begin{proof} We prove properties (1), (2), and (3) of Definition~\ref{df:subspace}.
+  \begin{enumerate}
+    \item Since $A\bzero=\bzero$ we have $\bzero\in N(A)$ by defintion of $N(A)$.
+    \item Let $\bx_1$ and $\bx_2$ be arbitrary elements of $N(A)$. Then, by definition of $N(A)$,
+      \[
+        A\bx_1=\bzero\quad\text{and}\quad A\bx_2=\bzero.
+      \]
+      Therefore,
+      \[
+        A(\bx_1+\bx_2) = A\bx_1 + A\bx_2 = \bzero + \bzero = \bzer0.
+      \]
+      Thus, $\bx_1+\bx_2\in N(A)$, by definition of $N(A)$.
+    \item Let $\bx$ be an arbitrary element of $N(A)$ and let $s$ be an y real number.
+      As $\bx\in N(A)$, we have $A\bx=\bzero$, by defintion of $N(A)$.
+      Therefore,
+      \[
+        A(s\bx) = s(A\bx) = s\bzero = \bzero.
+      \]
+      Thus, $s\bx\in N(A)$, by definition of $N(A)$.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  We give a shorter proof that the set $U$ of Example~\ref{eg:nullspace_in_disguise} is a subspace of $\RR^2$.
+  By the identity
+  \[
+    \mat{1&1}\mat{x\\y} = \mat{x+y},
+  \]
+  and the defintion of $N\left(\mat{1&1}\right)$, we have
+  \begin{align*}
+    U &= \left\{\mat{x\\y} : x + y = 0\right\}\\
+      &= \left\{\mat{x\\y} : \mat{1& 1}\mat{x\\y} =
+        \mat{0}\right\}\\
+      &= N\left(\mat{1&1}\right).
+  \end{align*}
+  Therefore, by Theorem~\ref{th:nullspace_is_subspace}, $U$ is a subspace of $\RR^2$.
+
+\begin{example}
+  Let
+  \[
+    U = \left\{\mat{x\\y\\z} : \text{$x + 2y = 3z$ and
+    $4z - 2x = y$}\right\}.
+  \]
+  We have:
+  \begin{align*}
+    &x+2y=3z& &\Longleftrightarrow& \mat{1&2&-3}\mat{x\\y\\z}&=\mat{0}\\
+    \text{and}\qquad& 4z-2x=y& &\Longleftrightarrow& 
+    \mat{-2&-1&4}\mat{x\\y\\z}&=\mat{0}.
+  \end{align*}
+  If follows that
+  \[
+    \mat{x\\y\\z}\in U\Longleftrightarrow
+    \mat{1&2&-3\\-2&-1&4}\mat{x\\y\\z}=\mat{0\\0}.
+  \]
+  Therefore,
+  \[
+    U = N\left(\mat{1&2&-3\\-2&-1&4}\right),
+  \]
+  by definition of nullspace.
+  Thus, by Theorem~\ref{th:nullspace_is_subspace}, $U$ is a subspace of $\RR^3$.
+
+\end{example}
+
+\end{example}
+
+\begin{theorem}\label{th:col_space_is_subspace}
+  Let $A\in\RR^{m\times n}$. Then $C(A)$ is a subspace of $\RR^m$.
+\end{theorem}
+
+\begin{proof} We prove properties (1), (2), and (3) of Definition~\ref{df:subspace}.
+  \begin{enumerate}
+    \item Since $\bzero = A\bzero$ we have $\bzero\in C(A)$, by defintion of $C(A)$.
+    \item Let $\bb_1$ and $\bb_2$ be arbitrary elements of $C(A)$. Then, by definition of $C(A)$, there are elements $\bx_1$ and $\bx_2$ of $\RR^n$ such that
+      \[
+        A\bx_1=\bb_1\quad\text{and}\quad A\bx_2=\bb_2.
+      \]
+      Therefore,
+      \[
+        A(\bx_1+\bx_2) = A\bx_1 + A\bx_2 = \bb_1 + \bb_2.
+      \]
+      Thus, $\bb_1+\bb_2\in C(A)$, by definition of $C(A)$.
+    \item Let $\bb$ be an arbitrary element of $C(A)$ and let $s$ be an y real number.
+      As $\bb\in C(A)$, there is a vector $\bx$ in $\RR^n$ such that $A\bx=\bb$, by defintion of $C(A)$.
+      Therefore,
+      \[
+        A(s\bx) = s(A\bx) = s\bb.
+      \]
+      Thus, $s\bb\in C(A)$, by definition of $C(A)$.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  Let
+  \[
+    U =\left\{\mat{2x+3y\\y-x\\y}\in\RR^3 : s, t\in\RR,\right\}.
+  \]
+  By the identity
+  \[
+    \mat{2x+3y\\y-x\\y} = \mat{2&3\\-1&1\\0&1}\mat{x\\y},
+  \]
+  and the defintion of column space, we have
+  \[
+    U = C\left(\mat{2&3\\-1&1\\0&1}\right).
+  \]
+  Therefore, by Theorem~\ref{th:col_space_is_subspace}, $U$ is a subspace of $\RR^3$.
+\end{example}
+
+\begin{example}\label{eg:null_to_column}
+  Let
+  \[
+    A = \mat{1&2&3&4\\5&6&7&8\\9&12&11&12}.
+  \]
+  The general solution of $A\bx=\bzero$ is
+  \[
+    \mat{w\\x\\y\\z} = s\mat{1\\-2\\1\\0} + t\mat{2\\-3\\0\\1}.
+  \]
+  By definition of nullspace,
+  \[
+    N(A) = \left\{s\mat{1\\-2\\1\\0} + t\mat{2\\-3\\0\\1} : s,t\in\RR\right\}
+  \]
+  By the identity
+  \[
+    s\mat{1\\-2\\1\\0} + t\mat{2\\-3\\0\\1} =
+    \mat{1&2\\-2&-3\\1&0\\0&1}\mat{s\\t}
+  \]
+  and the definitions of nullspace and column space, it follows that
+  \[
+    N(A) = C\left(\mat{1&2\\-2&-3\\1&0\\0&1}\right).
+  \]
+\end{example}
+
+\begin{remarks}\hfill
+  \begin{itemize}
+  \item Example~\ref{eg:null_to_column} illustrates that ``solving the system'' $A\bx=\bb$, in the sense of MATH 211, amounts to expressing the nullspace of $A$ as the column space of another matrix: the one whose columns are the ``basic solutions'' of $A\bx=\bb$.
+  \item Later we will show how to express a column space as a nullspace.
+\end{remarks}
+
+\begin{exercise}
+  Prove that $\{\bzero\}$ and $\RR^m$ are subspaces of $\RR^m$.
+\end{exercise}
+
+\begin{exercise}
+  Let $U$ be a subset of $\RR^m$.
+  Prove that $U$ is a subspace of $\RR^m$ if and only if $U$ satisfies
+  (1$'$), below, as well as properties (2), and (3) of Definition~\ref{df:subspace}.
+  \begin{enumerate}
+    \item[(1$'$)] $U$ is nonempty.
+  \end{enumerate}
+\end{exercise}
+
+\section{Linear combinations}
 Let
 \[
   A = \mat{\ba_1&\cdots&\cdots \ba_n}\in\RR^{m\times n}.
 \]
-The theory of the equation $A\bx=\bv$ --- an algebraic theory, so far --- can be understood in terms of the geometry of the column vectors $\bas$ of $A$ and the vector $\bv$.
+The theory of the equation $A\bx=\bb$ --- an algebraic theory, so far --- can be understood in terms of the geometry of the column vectors $\bas$ of $A$ and the vector $\bb$.
 This geometric perspective is well worth developing:
 It lets us to apply algebraic methods to geometry.
 Even more valuable, perhaps, it gives us a framework for thinking geometrically (visually) about algebra. 
@@ -171,6 +465,7 @@ In developing a geometric point of view on linear algebra, we incur some overhea
   where $t_j\in \RR$.
 \end{definition}
 
+\subsection{Examples}
 \begin{exdef}\label{exdef:trivial_lc}
   The zero vector can be expressed as a	linear comination of any sequence of vectors $\bas$:
   \[ \bzero = 0\ba_1+ \cdots + 0\ba_n.  \]
@@ -183,30 +478,49 @@ In developing a geometric point of view on linear algebra, we incur some overhea
     \bi_j := \mat{0\\\vdots\\0\\1\\0\\\vdots\\0} \leftarrow \text{$j$-th row}.
   \]
   It's called the \emph{$j$-th standard basis vector of $\RR^m$}.
-Any vector $\bv\in\RR^m$ can be expressed as a linear combination of these:
+
+  Any vector $\bb\in\RR^m$ can be expressed as a linear combination of these:
 \[
   \begin{array}{rcrcrcccr}
-    \mat{v_1\\v_2\\\vdots\\v_m} &=&
-\mat{v_1\\0\\\vdots\\0} 
-&+& \mat{0\\v_2\\\vdots\\0}
+    \mat{b_1\\b_2\\\vdots\\b_m} &=&
+\mat{b_1\\0\\\vdots\\0} 
+&+& \mat{0\\b_2\\\vdots\\0}
 &+& \cdots
-&+& \mat{0\\0\\\vdots\\v_m} \\
-&=& v_1\mat{1\\0\\\vdots\\0} 
-&+& v_2\mat{0\\1\\\vdots\\0}
+&+& \mat{0\\0\\\vdots\\b_m} \\
+&=& b_1\mat{1\\0\\\vdots\\0} 
+&+& b_2\mat{0\\1\\\vdots\\0}
 &+& \cdots
-&+& v_m\mat{0\\0\\\vdots\\1} \\
-&=& v_1\bi_1 &+& v_2\bi_2 &+&  \cdots  &+& v_m\bi_m
+&+& b_m\mat{0\\0\\\vdots\\1} \\
+&=& b_1\bi_1 &+& b_2\bi_2 &+&  \cdots  &+& b_m\bi_m
   \end{array}
 \]
 \end{exdef}
 
+\subsection{Linear combinations are matrix-vector products}
 Here's a trivial, yet crucial, observation: By the definition of matrix multiplication,
-\[ x_1\ba_1+\cdots + x_n\ba_n = A\bx. \]
-We record (a paraphrase of) this simple fact, prominently, for ease of reference.
+\begin{equation}\label{eq:lc_matvec}
+  x_1\ba_1+\cdots + x_n\ba_n = A\bx. 
+\end{equation}
+Remember this principle:
+\begin{center}
+  \textbf{\textit{Linear combinations are just matrix-vector products.}}
+\end{center}
 
-\begin{keyfact}\label{kf:lc_matvec}
-  Linear combinations are just matrix-vector products.
-\end{keyfact}
+We apply it right away:
+\begin{theorem}\label{th:col_space_is_set_of_lcs}
+  The column space $C(A)$ is the set of all linear combinations of the column vectors $\bas$ of $A$:
+  \[
+    C(A) = \{x_1\ba_1+\cdots+x_n\ba_n : x_1,\ldots,x_n\in\RR\}.
+  \]
+\end{theorem}
+\begin{proof}
+  \begin{align*}
+    C(A) &= \{A\bx : \bx\in \RR^n\}& \text{(by definition of $C(A)$)}\\
+         &= \{x_1\ba_1 + \cdots + x_n\ba_n : x_1,\ldots,x_n\in \RR\} &\text{(by~\eqref{eq:lc_matvec})}.&\qedhere
+  \end{align*}
+\end{proof}
+
+\section{Span}
 
 \begin{definitions}\label{df:span}
   The \emph{span} of the vectors $\bas$, written $\langle \bas\rangle$, is the set of their linear combinations:
@@ -217,7 +531,7 @@ We record (a paraphrase of) this simple fact, prominently, for ease of reference
 \end{definitions}
 
 \begin{example}
-  Let $\bi_1,\ldots,\bi_m$ be the standard basis of $\RR^m$, as in Example-Definition~\ref{exdef:standard_basis}. As every vector $\bv\in\RR^m$ can be expressed as a linear comnination of $\bi_1,\ldots,\bi_m$, we have
+  Let $\bi_1,\ldots,\bi_m$ be the standard basis of $\RR^m$, as in Example-Definition~\ref{exdef:standard_basis}. As every vector $\bb\in\RR^m$ can be expressed as a linear comnination of $\bi_1,\ldots,\bi_m$, we have
   \[
     \langle \bi_1,\ldots,\bi_m\rangle = \RR^m.
   \]
@@ -231,8 +545,8 @@ We record (a paraphrase of) this simple fact, prominently, for ease of reference
 \end{example}
 
 \begin{theorem}\label{th:leading_ones} Let $A$ be its matrix and let $R=\rref
-	A$.  \begin{enumerate} \item The equation $A\bx=\bv$ has a solution for
-		all vectors $\bv$ if and only if every row of $R$ has a leading
+	A$.  \begin{enumerate} \item The equation $A\bx=\bb$ has a solution for
+		all vectors $\bb$ if and only if every row of $R$ has a leading
 		one.  \item The equation $A\bx=\bzero$ has only the trivial
 		solution, $\bx=\bzero$, if and only if every column of $R$ has
 		a leading one.
@@ -242,24 +556,24 @@ We record (a paraphrase of) this simple fact, prominently, for ease of reference
 Theorem~\ref{th:leading_ones} suggests taking a closer look at the following
 two sets of vectors associated to a matrix $A\in\RR^{m\times n}$:
 \begin{definitions}\hfill \begin{enumerate} \item The set of all vectors
-	$\bv\in\RR^m$ such $A\bx=\bv$ has a solution is called the \emph{column
+	$\bb\in\RR^m$ such $A\bx=\bb$ has a solution is called the \emph{column
 	space of $A$} and written $C(A)$: \[ C(A) = \{A\bx : \bx\in \RR^n\}.
 \]
 
 
 		\item The set of all vectors $\bx\in\RR^n$ such that
 		$A\bx=\bzero$ is called the \emph{nullspace of $A$} and written
-	$N(A)$: \[ N(A) = \{\bx\in\RR^n : A\bx=\bzero\}.  \] \end{definitions}
+$N(A)$: \[ N(A) = \{\bx\in\RR^n : A\bx=\bzero\}.  \]\end{enumerate} \end{definitions}
 
 \begin{corollary} Let $A\in\RR^{m\times n}$.  \begin{enumerate} \item If
-	$A\bx=\bv$ has a solution for all $\bv\in\RR^m$, i.e., if
+	$A\bx=\bb$ has a solution for all $\bb\in\RR^m$, i.e., if
 	$$C(A)=\RR^m,$$ then $m\leq n$.  \item If $A\bx=\bzero$ has only the
 	trivial solution, i.e., if $$N(A)=\{\bzero\},$$ then $n\leq m$.
 	\end{enumerate} \end{corollary}
 
 \begin{corollary} The following are equivalent for a square matrix
-	$A\in\RR^{m\times m}$.  \begin{enumerate} \item $A\bx=\bv$ has a
-		solution for all vectors $\bv$.  \item $C(A)=\RR^m$ \item
+	$A\in\RR^{m\times m}$.  \begin{enumerate} \item $A\bx=\bb$ has a
+		solution for all vectors $\bb$.  \item $C(A)=\RR^m$ \item
 		$A\bx=\bzero$ has only the trivial solution.  \item
 		$N(A)=\{\bzero\}$ \item $\rref A = I$ \item $A$ is invertible.
 \end{enumerate} \end{corollary}
@@ -313,7 +627,7 @@ products.  \end{keyfact}
 	
 	\[ \langle \bas \rangle := \{x_1\ba_1+\cdots + x_n\ba_n
 		: x_1,\ldots,x_n\in\RR\}.  \] We say $\bas$ \emph{span $\RR^m$}
-		if every vector $\bv\in\RR^m$ can be written as such a linear
+		if every vector $\bb\in\RR^m$ can be written as such a linear
 		combination, i.e., if \[ \langle \ba_1,\ldots,\ba_n\rangle =
 			\RR^m.  \] If \[
 			A=\mat{\ba_1&\ldots&\ba_n}\in\RR^{m\times n}, \] we
@@ -323,8 +637,8 @@ products.  \end{keyfact}
 
 Note that, by Key Fact~\ref{kf:lc_matvec}, \[ C(A) = \{A\bx : \bx\in\RR^n\}.
 \] \begin{theorem} The following are equivalent for a matrix $A\in\RR^{m\times
-n}$.  \begin{enumerate} \item $C(A) = \RR^m$ \item The equation $A\bx=\bv$ has
-	a solution for all $\bv$.  \item $\rref A$ has a leading one in every
+n}$.  \begin{enumerate} \item $C(A) = \RR^m$ \item The equation $A\bx=\bb$ has
+	a solution for all $\bb$.  \item $\rref A$ has a leading one in every
 	row.  \end{enumerate} Moreover, if any (hence, all) of these conditions
 hold, then $m\leq n$.  \end{theorem}
 
@@ -340,6 +654,98 @@ the only linear combination of $\bas$ that equals $\bzero$ is the trivial one
 (see Example-Definition~\ref{exdef:trivial_lc}).  \end{definition}
 
 
+\section{Reduced row echelon form}
+
+
+\begin{definition}\label{df:rref}
+  A matrix $R$ is in \emph{reduced row echelon form} if:
+  \begin{enumerate}
+    \item All zero rows of $R$ are at the bottom.
+    \item Every nonzero row has a leading one.
+    \item A	leading one is the right of those in the rows above it.
+    \item A leading one is the only nonzero entry in its column.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}\label{df:row_equiv}
+  Let $A, B\in \RR^{m\times n}$.
+  We say that \emph{$A$ and $B$ are row equivalent} or that \emph{$A$ is row equivalent to $B$} if there is an \emph{invertible} matrix $\gamma\in\RR^{m\times m}$ such that $\gamma A=B$.
+\end{definition}
+
+\begin{remarks}\hfill \begin{enumerate}
+  \item Since $\gamma A=B$ if and only if
+	$\gamma^{-1} B=A$, the notion of row equivalence is symmetric in $A$ and $B$: $A$ is row equivalent to $B$ if and only if $B$ is row equivalent to $A$.
+
+  \item $A$ and $B$ are row equivalent if and only if $A$ can
+	be transformed into $B$ via a sequence of elementary row operations.
+	The theory of elementary matrices connects this formulation of row
+	equivalence with that of Definition~\ref{df:row_equiv}.
+	\end{enumerate}
+\end{remarks}
+
+\begin{theorem}\label{th:rref_existence_uniqueness}
+  A matrix $A$ is row equivalent to a unique matrix in reduced row echelon form.
+\end{theorem}
+
+\section{Uniqueness of reduced row echelon form} (Under construction; do not read!)
+
+\begin{lemma}\label{L:spanofcolstotheleft} Let $A=\begin{pmatrix}\ba_1&\ba_2&\cdots\ba_n\end{pmatrix}$ be an $m\times n$ matrix reduced row echelon form with pivot columns $j_1<j_2<\ldots<j_r$. The following are equivalent:
+\begin{enumerate}
+\item $\ba_j$ is a pivot column of $A$.
+\item $\ba_j\notin \Span\{\ba_{j_i} : j_i<j\}$.
+\item $\ba_j\notin \Span\{\ba_k : k<j\}$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Let $A_j=\begin{pmatrix}\ba_1&\ba_2&\cdots&\ba_j\end{pmatrix}$.
+Then $A_j$ is in reduced row echelon form as $A$ is (reference an exercise?) and $\{\ba_{j_i}:j_i<j\}$ is a basis for $C(A_j)$ by Theorem~\ref{T:spanofpivotcols}.
+In particular, if $1\leq p\leq r$ then $\{\ba_{j_i} : 1\leq i\leq p\}$ is a basis of $C(A_{j_p})$. Since bases are linearly independent,
+\[
+\ba_{j_p}\notin\Span\{\ba_{j_i}: 1\leq i<p\},
+\]
+proving that (1) implies (2).
+
+Conversely, suppose $\ba_j$ is not a pivot column of $A$.
+Now the column space of $A_j$ is spanned by its pivot columns, namely, the $\ba_{j_i}$ with $j_i<j$, so $\ba_j\in\Span\{\ba_{j_i}:j_i<j\}$. This proves that (2) implies (1).
+
+To see that (2) and (3) are equivalent, observe that $\Span\{\ba_k : k<j\}$ is by definition, the column space of $A_j$ while $\Span\{\ba_{j_i} : j_i<j\}$ is the span of the pivot columns of $A_j$.
+But these spans are equal by Theorem~\ref{T:spanofpivotcols}.
+\end{proof}
+
+\begin{exercise}
+Let $A$ be an $m\times n$ matrix in row echelon form whose leading $1$s lie in positions $(i,j_i)$, $1\leq i\leq r$. Suppose $j_i<j<j_{i+1}$. Prove that
+$a_{pj}=0$ for $i< p\leq m$.
+\end{exercise}
+
+
+\begin{theorem}
+Let $A$ and $B$ be row equivalent matrices in reduced row echelon form. Then $A=B$.
+\end{theorem}
+
+\begin{proof}
+Suppose not. Then there is a pair of $m\times n$ matrices $(A,B)$ witnessing the failure of the theorem such that $n$ minimal among all such witnesses. In other words:
+\begin{enumerate}
+\item[(i)] $A$ and $B$ are distinct, row equivalent matrices in reduced row echelon form.
+\item[(ii)] If $A'$ and $B'$ is another such pair then $A$ has fewer columns than $A'$. 
+\end{enumerate}
+
+Since $A$ and $B$ are row equivalent and in reduced row echelon form, so are $A_{n-1}$ and $B_{n-1}$. (Why?)
+By the minimality of $n$, the theorem holds for $A_{n-1}$ and $B_{n-1}$. Therefore, $A_{n-1}=B_{n-1}$. Thus, to prove the theorem, it suffices to show that $\ba_n=\bb_n$.
+
+Suppose, first, that $\ba_n$ is a pivot column of $A$.
+Then $\ba_n\notin C(A_{n-1})$ by Lemma~\ref{L:spanofcolstotheleft}.
+Since $A$ and $B$ are row equivalent, $\ba_n\in C(A_{n-1})$ if and only if $\bb_n\in C(B_{n-1})$.
+(Row equivalence preserves linear relations between columns.)
+Therefore, $\bb_n\notin C(B_{n-1})$ and, by Lemma~\ref{L:spanofcolstotheleft} again, $\bb_n$ is a pivot column of $B$.
+Let $r=\rank A_{n-1}=\rank B_{n-1}$.
+Then $\ba_n$ and $\bb_n$ must both equal $\be_{r+1}$ because $A$ and $B$ are in reduced row echelon form.
+Thus, $\ba_n=\bb_n$.
+
+Now suppose that $\ba_n$ is not a pivot column of $A$. Then $\ba_n\in C(A_{n-1})$ by Lemma~\ref{L:spanofcolstotheleft}, so there is a vector $\bx\in \RR^{n-1}$ such that
+$\ba_n=A_{n-1}\bx$. Since $A$ and $B$ are row equivalent, $\bb_n=B_{n-1}\bx$. But $A_{n-1}=B_{n-1}$, so it follows once again that $\ba_n=\bb_n$.
+\end{proof}
+
 
 
 \end{document}
+

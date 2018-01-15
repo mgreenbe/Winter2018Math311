@@ -5,7 +5,9 @@
 \newcommand{\RR}{\mathbb{R}}
 \newcommand{\ZZ}{\mathbb{Z}}
 \DeclareMathOperator{\rref}{rref}
-\DeclareMathOperator{\nullity}{nullity} \DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\rank}{rank}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{thdf}{Theorem-Definition}[section]
@@ -16,8 +18,7 @@
 \newtheorem{remark}[theorem]{Remark} \newtheorem{remarks}[theorem]{Remarks}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{exdef}[theorem]{Example-Definition}
-\newtheorem{exercise}[theorem]{Exercise} \newtheorem{keyfact}[theorem]{Key
-fact} 
+\newtheorem{exercise}[theorem]{Exercise}
 
 \newcommand{\ba}{\mathbf{a}}
 \newcommand{\bb}{\mathbf{b}}
@@ -37,14 +38,13 @@ fact}
 \newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
 \newcommand{\Rmn}{\RR^{m\times n}} \newcommand{\Rmm}{\RR^{m\times m}}
 \newcommand{\Rnn}{\RR^{n\times n}}
+\newcommand{\spn}[1]{\Span\left(#1\right)}
 
 \newcommand{\setstuff}{\setlength{\parskip}{0.5em}\setlength{\parindent}{0em}\setlength{\itemsep}{0.5em}}
-\DeclareMathOperator{\Span}{span}
 
 \begin{document}
 \setstuff
 
-\includegraphics[scale=1.5]{lincombs.pdf}
 
 \section{The equation $A\bx=\bb$}
 
@@ -200,7 +200,7 @@ Then
   \end{enumerate}
 \end{definition}
 
-\begin{remark}\hfill
+\begin{remarks}\hfill
   \begin{itemize}
 \item When attempting to prove that a subset $U$ of $\RR^m$ satisfies property (2), you need to show that $\bu_1+\bu_2\in U$ for \emph{any} pair of elements $\bu_1, \bu_2$ of $U$.
   Similarly, to prove that a subset $U$ of $\RR^m$ satisfies property (3), you need to show that $s\bu\in U$ for \emph{any} element $\bu_1$ of $U$ and \emph{any} real number $s$.
@@ -306,7 +306,7 @@ Then
       \]
       Therefore,
       \[
-        A(\bx_1+\bx_2) = A\bx_1 + A\bx_2 = \bzero + \bzero = \bzer0.
+        A(\bx_1+\bx_2) = A\bx_1 + A\bx_2 = \bzero + \bzero = \bzero.
       \]
       Thus, $\bx_1+\bx_2\in N(A)$, by definition of $N(A)$.
     \item Let $\bx$ be an arbitrary element of $N(A)$ and let $s$ be an y real number.
@@ -430,8 +430,9 @@ Then
 
 \begin{remarks}\hfill
   \begin{itemize}
-  \item Example~\ref{eg:null_to_column} illustrates that ``solving the system'' $A\bx=\bb$, in the sense of MATH 211, amounts to expressing the nullspace of $A$ as the column space of another matrix: the one whose columns are the ``basic solutions'' of $A\bx=\bb$.
-  \item Later we will show how to express a column space as a nullspace.
+    \item Example~\ref{eg:null_to_column} illustrates that ``solving the system'' $A\bx=\bb$, in the sense of MATH 211, amounts to expressing the nullspace of $A$ as the column space of another matrix: the one whose columns are the ``basic solutions'' of $A\bx=\bb$.
+    \item Later we will show how to express a column space as a nullspace.
+  \end{itemize}
 \end{remarks}
 
 \begin{exercise}
@@ -465,7 +466,11 @@ In developing a geometric point of view on linear algebra, we incur some overhea
   where $t_j\in \RR$.
 \end{definition}
 
-\subsection{Examples}
+\begin{figure}
+\includegraphics[scale=1.5]{lincombs.pdf}
+\caption{Picturing linear combinations}
+\end{figure}
+
 \begin{exdef}\label{exdef:trivial_lc}
   The zero vector can be expressed as a	linear comination of any sequence of vectors $\bas$:
   \[ \bzero = 0\ba_1+ \cdots + 0\ba_n.  \]
@@ -496,7 +501,6 @@ In developing a geometric point of view on linear algebra, we incur some overhea
 \]
 \end{exdef}
 
-\subsection{Linear combinations are matrix-vector products}
 Here's a trivial, yet crucial, observation: By the definition of matrix multiplication,
 \begin{equation}\label{eq:lc_matvec}
   x_1\ba_1+\cdots + x_n\ba_n = A\bx. 
@@ -523,9 +527,9 @@ We apply it right away:
 \section{Span}
 
 \begin{definitions}\label{df:span}
-  The \emph{span} of the vectors $\bas$, written $\langle \bas\rangle$, is the set of their linear combinations:
+  The \emph{span} of the vectors $\bas$, written $\spn{\bas}$, is the set of their linear combinations:
   \[ 
-    \langle \bas \rangle := \{x_1\ba_1+\cdots + x_n\ba_n
+    \spn{\bas} := \{x_1\ba_1+\cdots + x_n\ba_n
     : x_1,\ldots,x_n\in\RR\}.
   \]
 \end{definitions}
@@ -533,127 +537,77 @@ We apply it right away:
 \begin{example}
   Let $\bi_1,\ldots,\bi_m$ be the standard basis of $\RR^m$, as in Example-Definition~\ref{exdef:standard_basis}. As every vector $\bb\in\RR^m$ can be expressed as a linear comnination of $\bi_1,\ldots,\bi_m$, we have
   \[
-    \langle \bi_1,\ldots,\bi_m\rangle = \RR^m.
+    \spn{\bi_1,\ldots,\bi_m} = \RR^m.
   \]
 \end{example}
 
 \begin{example}
   By Key fact~\ref{kf:lc_matvec} and Definition~\ref{df:col_space}, we have:
   \begin{equation}\label{eq:col_space_is_span}
-    C(A) = \langle \bas \rangle.
+    C(A) =\spn{\bas},
   \end{equation}
+  where
+  \[
+    A=\mat{\ba_1&\ldots&\ba_n}.
+  \]
 \end{example}
 
-\begin{theorem}\label{th:leading_ones} Let $A$ be its matrix and let $R=\rref
-	A$.  \begin{enumerate} \item The equation $A\bx=\bb$ has a solution for
-		all vectors $\bb$ if and only if every row of $R$ has a leading
-		one.  \item The equation $A\bx=\bzero$ has only the trivial
-		solution, $\bx=\bzero$, if and only if every column of $R$ has
-		a leading one.
+\begin{theorem}\label{th:span_is_subspace}
+  Let $\bas\in\RR^m$. Then $\spn{\bas}$ is a subspace of $\RR^m$.
+\end{theorem}
+\begin{proof}
+  By~\eqref{eq:col_space_is_span},
+  \[
+     \spn{\bas}=C\left(\mat{\ba_1&\cdots&\ba_n}\right).
+  \]
+  Therefore, by Theorem~\ref{th:col_space_is_subspace}, $\spn{\bas}$ is a subspace of $\RR^m$.
+\end{proof}
 
-	\end{enumerate} \end{theorem}
+\begin{example}
+  Let
+  \[
+    \ba_1 = \mat{1\\0\\2},\quad 
+    \ba_2=\mat{-1\\-1\\0},\quad 
+    \ba_3=\mat{1\\-1\\4},\quad
+    \bb_1=\mat{1\\2\\3},\quad
+    \bb_2=\mat{8\\3\\10}.
+  \]
+  \begin{enumerate}
+    \item I claim that $\bb_1\notin \spn{\ba_1,\ba_2}$.
 
-Theorem~\ref{th:leading_ones} suggests taking a closer look at the following
-two sets of vectors associated to a matrix $A\in\RR^{m\times n}$:
-\begin{definitions}\hfill \begin{enumerate} \item The set of all vectors
-	$\bb\in\RR^m$ such $A\bx=\bb$ has a solution is called the \emph{column
-	space of $A$} and written $C(A)$: \[ C(A) = \{A\bx : \bx\in \RR^n\}.
+  \medskip
+  It suffices to show (why?) that $\bb_1\notin C(A)$, where
+  where
+  \[
+    A:=\mat{\ba_1&\ba_2}=\mat{1&-1\\0&-1\\2&0}.
+  \]
+  It is easily verified that $A\bx=\bb_1$ has no solution, so $\bb_1\notin C(A)$.
+
+
+\item
+  We have $\bb_2\in C(A)$ because $A\bx=\bb_2$ is soluble:
+
+  \[
+    \bx=\mat{5\\-3}
+  \]
+  is the unique solution.
+  This solution $\bx$ to $A\bx=\bb_2$ is precisely the information we need to write $\bb_1$ as a linear comination of $\ba_1,\ba_2$:
+  \[
+  \mat{8\\3\\10} = \mat{1&-1\\0&-1\\2&0}\mat{5\\-3} =
+  5\mat{1\\0\\2} - 3\mat{-1\\-1\\0}.
 \]
+By the uniqueness of the solution $\bx$, the above is the only way to write $\bb_2$ as a linear combination of $\ba_1$ and $\ba_2$.
+\end{enumerate}
+\end{example}
 
 
-		\item The set of all vectors $\bx\in\RR^n$ such that
-		$A\bx=\bzero$ is called the \emph{nullspace of $A$} and written
-$N(A)$: \[ N(A) = \{\bx\in\RR^n : A\bx=\bzero\}.  \]\end{enumerate} \end{definitions}
-
-\begin{corollary} Let $A\in\RR^{m\times n}$.  \begin{enumerate} \item If
-	$A\bx=\bb$ has a solution for all $\bb\in\RR^m$, i.e., if
-	$$C(A)=\RR^m,$$ then $m\leq n$.  \item If $A\bx=\bzero$ has only the
-	trivial solution, i.e., if $$N(A)=\{\bzero\},$$ then $n\leq m$.
-	\end{enumerate} \end{corollary}
-
-\begin{corollary} The following are equivalent for a square matrix
-	$A\in\RR^{m\times m}$.  \begin{enumerate} \item $A\bx=\bb$ has a
-		solution for all vectors $\bb$.  \item $C(A)=\RR^m$ \item
-		$A\bx=\bzero$ has only the trivial solution.  \item
-		$N(A)=\{\bzero\}$ \item $\rref A = I$ \item $A$ is invertible.
-\end{enumerate} \end{corollary}
-
-Later, we'll give an intrinsic definition of the following essential notion:
-\begin{provdef} A \emph{subspace of $\RR^m$} is a subset of the form $C(A)$,
-where $A\in\RR^{m\times n}$, or $N(B)$, where $B\in\RR^{\ell\times m}$.
-\end{provdef}
-
-Row equivalence
-
-Uniqueness of rref
-
-Pivot columns
-
-% ******************************************************************************
-% %
-% ******************************************************************************
-% %
-
-\section{Linear combinations}
-
-\begin{definition}\label{df:lc_span} A \emph{linear combination} of vectors
-$\bas$ is an expression of the form \[ x_1\ba_1+\cdots +x_n\ba_n, \] where
-$t_j\in \RR$.  \end{definition}
-
-\begin{exdef}\label{exdef:trivial_lc} The zero vector can be written as a
-	linear comination of any sequence of vectors $\bas$: \[ \bzero = 0\ba_1
-	+ \cdots + 0\ba_n.  \] The expression on the right hand side is called
-	the \emph{trivial linear combination} of $\bas$.  \end{exdef}
-
-Here's a trivial, yet crucial, observation. Let \[
-A=\mat{\ba_1&\cdots&\ba_n}\in\RR^{m\times n}, \quad \bx=\mat{x_1\\\vdots\\x_m}.
-\] Then, by the definition of matrix multiplication, \[ x_1\ba_1+\cdots +
-x_n\ba_n = A\bx.  \] We record (a paraphrase of) this simple fact, prominently,
-for ease of reference.
-
-\begin{keyfact}\label{kf:lc_matvec} Linear combinations are just matrix-vector
-products.  \end{keyfact}
-
-% ******************************************************************************
-% %
-% ******************************************************************************
-% %
-
-\section{Span}
-
-\begin{definitions} The \emph{span} of a sequence $\bas$ of vectors in $\RR^m$,
-	written $\langle \bas\rangle$, is the set of all linear combinations of
-	these vectors:
-	
-	\[ \langle \bas \rangle := \{x_1\ba_1+\cdots + x_n\ba_n
-		: x_1,\ldots,x_n\in\RR\}.  \] We say $\bas$ \emph{span $\RR^m$}
-		if every vector $\bb\in\RR^m$ can be written as such a linear
-		combination, i.e., if \[ \langle \ba_1,\ldots,\ba_n\rangle =
-			\RR^m.  \] If \[
-			A=\mat{\ba_1&\ldots&\ba_n}\in\RR^{m\times n}, \] we
-		abbreviate to $\langle \ba_1,\ldots,\ba_n\rangle$ to $C(A)$,
-	and refer to this set as the \emph{column space} of $A$: \[ C(A) :=
-\langle \ba_1,\ldots,\ba_n\rangle.  \] \end{definitions}
-
-Note that, by Key Fact~\ref{kf:lc_matvec}, \[ C(A) = \{A\bx : \bx\in\RR^n\}.
-\] \begin{theorem} The following are equivalent for a matrix $A\in\RR^{m\times
-n}$.  \begin{enumerate} \item $C(A) = \RR^m$ \item The equation $A\bx=\bb$ has
-	a solution for all $\bb$.  \item $\rref A$ has a leading one in every
-	row.  \end{enumerate} Moreover, if any (hence, all) of these conditions
-hold, then $m\leq n$.  \end{theorem}
-
-% ******************************************************************************
-% %
-% ******************************************************************************
-% %
-
-\section{Linear independence}
-
-\begin{definition} Vectors $\bas\in\RR^m$ are \emph{linearly independent} if
-the only linear combination of $\bas$ that equals $\bzero$ is the trivial one
-(see Example-Definition~\ref{exdef:trivial_lc}).  \end{definition}
 
 
+
+
+
+
+\begin{comment}
 \section{Reduced row echelon form}
 
 
@@ -744,7 +698,7 @@ Thus, $\ba_n=\bb_n$.
 Now suppose that $\ba_n$ is not a pivot column of $A$. Then $\ba_n\in C(A_{n-1})$ by Lemma~\ref{L:spanofcolstotheleft}, so there is a vector $\bx\in \RR^{n-1}$ such that
 $\ba_n=A_{n-1}\bx$. Since $A$ and $B$ are row equivalent, $\bb_n=B_{n-1}\bx$. But $A_{n-1}=B_{n-1}$, so it follows once again that $\ba_n=\bb_n$.
 \end{proof}
-
+\end{comment}
 
 
 \end{document}

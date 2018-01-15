@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1515099716 "notes.tex" "notes.pdf" "notes" 1515175175
+["pdflatex"] 1515099716 "notes.tex" "notes.pdf" "notes" 1515947669
   "./notes.tex" 1515099715 43619 63a164d3bce1abb74e1e79e08c2899b3 ""
   "c:/texlive/2015/texmf-dist/fonts/map/fontname/texfonts.map" 1453920685 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "c:/texlive/2015/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1453918112 1004 54797486969f23fa377b128694d548df ""
@@ -51,6 +51,6 @@
   "notes.aux" 1515099717 2935 c93f1748aba68a73dc324cb02ca43e3e ""
   "notes.tex" 1515099715 43619 63a164d3bce1abb74e1e79e08c2899b3 ""
   (generated)
-  "notes.pdf"
-  "notes.aux"
   "notes.log"
+  "notes.aux"
+  "notes.pdf"

@@ -1,0 +1,125 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{fullpage, amsmath, amsthm, amssymb, verbatim, graphicx}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\DeclareMathOperator{\rref}{rref}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\rank}{rank}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{thdf}{Theorem-Definition}[section]
+\newtheorem{corollary}[theorem]{Corollary} \newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition} \newtheorem{definition}[theorem]{Definition}
+\newtheorem{provdef}[theorem]{Provisional definition}
+\newtheorem{definitions}[theorem]{Definitions}
+\newtheorem{remark}[theorem]{Remark} \newtheorem{remarks}[theorem]{Remarks}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exdef}[theorem]{Example-Definition}
+\newtheorem{exercise}[theorem]{Exercise}
+
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\bd}{\mathbf{d}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bi}{\mathbf{i}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bzero}{\mathbf{0}}
+
+\newcommand{\bas}{\ba_1,\ldots,\ba_n}
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\Rmn}{\RR^{m\times n}} \newcommand{\Rmm}{\RR^{m\times m}}
+\newcommand{\Rnn}{\RR^{n\times n}}
+\newcommand{\spn}[1]{\Span\left(#1\right)}
+
+\newcommand{\setstuff}{\setlength{\parskip}{0.5em}\setlength{\parindent}{0em}\setlength{\itemsep}{0.5em}}
+
+\begin{document}
+\title{MATH 311 -- Winter 2018 -- Lab 1}
+\maketitle
+
+\begin{enumerate}
+  \setlength{\itemsep}{1em}
+  \item Let
+    \[
+      U := \left\{\mat{x\\y\\z}\in\RR^3 : 21x-7z = 0\right\}.
+    \]
+    \begin{enumerate}
+  \setlength{\itemsep}{0.5em}
+      \item Find a matrix $A$ such that $U=N(A)$.
+      \item By solving the system $A\bx=\bzero$, find a matrix $B$ such that $U=C(B)$.
+    \end{enumerate}
+
+
+  \item Let
+    \[
+      A = \mat{1 & 2 & 3\\4 & 5 & 6\\7 & 8 & 9},\quad
+      \bb_1 = \mat{4\\-7\\-10},\quad
+      \bb_2 = \mat{0\\0\\1}.
+    \]
+    \begin{enumerate}
+  \setlength{\itemsep}{0.5em}
+      \item Write $\bb_j$ as a linear combination of the columns of $A$, if possible.
+      \item Prove that each column of $A$ is in the span of the other two.
+    \end{enumerate}
+
+  \item Let
+    \[
+      U := \left\{\mat{x\\y\\z}\in\RR^3 : x^2 + y^2 = z^2\right\}.
+    \]
+    \begin{enumerate}
+  \setlength{\itemsep}{0.5em}
+      \item Prove that $U$ contains $\bzero$.
+      \item Prove that for all $\bu\in U$ and for all $t\in\RR$, $t\bu\in\RR$.
+      \item Find vectors $\bu_1,\bu_2\in U$ such that $\bu_1+\bu_2\notin U$. Conclude that $U$ is not a subspace of $\RR^3$.
+    \end{enumerate}
+  \item Let $\bv\in\RR^n$ and let
+    \[
+      U := \{\bx\in\RR^n : \bv\cdot\bx = 0\}.
+    \]
+    \begin{enumerate}
+  \setlength{\itemsep}{0.5em}
+      \item Prove, from the definition, that $U$ is a subspace of $\RR^n$.
+      \item Find a matrix $V\in \RR^{1\times n}$ such that $U=N(V)$. Conclude, again, that $U$ is a subspace of $\RR^n$.
+    \end{enumerate}
+
+    
+  \item Let
+    \[
+      U = \left\{\mat{x + y\\x-y\\3x} : x,y\in\RR\right\}.
+    \]
+    \begin{enumerate}
+  \setlength{\itemsep}{0.5em}
+      \item Find a matrix $A\in\RR^{3\times 2}$ such that $U=C(A)$.
+      \item Find a column vector $\bv\in\RR^3$ that is orthogonal to both columns of $A$.
+      \item Show that
+        \[
+          \bv^TA = \mat{0&0}.
+        \]
+        (Hint: Interpret the columns of $\bv^TA$ as dot products.)
+      \item Use (c) to show that
+        \[
+          \bv^TA\bx=\mat{0},
+        \]
+        for all $\bx\in\RR^2$. Conclude that $C(A)$ is a subset of $N(\bv^T)$.
+      \item Interpret $N(\bv^T)$ as a plane in $\RR^3$, passing throgh the origin.
+        Find an equation for it, in the form
+        \[
+          ax+by+cz=0
+        \].
+      \item By solving the system $\bv^T\bx=\bzero$, find a matrix $B\in\RR^{3\times 2}$ such that
+        \[
+          N(\bv^T)=C(B).
+        \]
+      \item ($*$) Prove that $C(A)=C(B)$.
+    \end{enumerate}
+\end{enumerate}
+\end{document}
